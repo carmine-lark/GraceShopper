@@ -17,4 +17,4 @@ NORMS
 13. Each pair must discuss their completed task during the daily stand up.
 14. Daily meetings at 5:30
 15. Master branch will only be merged between 7:00 and 7:30
-16. CSS will be a democratic process
+16. CSS will be a democratic process - classes and material will be built atop a bootstrap css implementation

@@ -1,3 +1,3 @@
-const Product
+const Product = {}
 
 module.exports = Product

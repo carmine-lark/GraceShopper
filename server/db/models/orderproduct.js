@@ -1,3 +1,3 @@
-const OrderProduct
+const OrderProduct ={}
 
 module.exports = OrderProduct

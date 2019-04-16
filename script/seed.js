@@ -12,7 +12,7 @@ async function seed() {
     Product.create({name: 'Choclate Chip', price: 34, description:'tasty treat', image:'example.png'})
   ])
 
-  console.log(`seeded ${users.length} users`)
+  // console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }
 

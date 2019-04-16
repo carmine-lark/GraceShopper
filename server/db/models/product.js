@@ -10,7 +10,7 @@ const Product = db.define('product', {
         allowNull: false
     },
     price: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.FLOAT,
         validate: {
             notEmpty: true,
             min: 0.99
@@ -25,4 +25,4 @@ const Product = db.define('product', {
     }
 })
 
-module.export = Product
+module.exports = Product

@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize')
 const User = require('./user')
 const Product = require('./product')
 const Order = require('./order')
@@ -16,6 +17,11 @@ const OrderProduct = require('./orderproduct')
  * for example, we can say: const {User} = require('../db/models')
  * instead of: const User = require('../db/models/user')
  */
+
+Order.belongsTo(User)
+//OrderProduct.hasMany(Order, {as: 'orderId'})
+//OrderProduct.hasMany(Product, {as: 'productId'})
+
 module.exports = {
   User,
   Product,

@@ -32,13 +32,17 @@ const User = db.define('user', {
       return () => this.getDataValue('salt')
     }
   },
-  googleId: {
+  googleid: {
     type: Sequelize.STRING
   },
   address: {
     type: Sequelize.TEXT,
     allowNull: false
-    // address model should be made 
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   }
 })
 

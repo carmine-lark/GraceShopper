@@ -22,7 +22,8 @@ const Product = db.define('product', {
         type: Sequelize.TEXT
     },
     image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        // add default img
     }
 })
 

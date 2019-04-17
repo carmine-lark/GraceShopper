@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const db = require('../db') 
+const db = require('../db')
 
 
 const Product = db.define('product', {
@@ -11,10 +11,10 @@ const Product = db.define('product', {
         allowNull: false
     },
     price: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.INTGER,
         validate: {
             notEmpty: true,
-            min: 0.99
+            min: 100
         },
         allowNull: false
     },

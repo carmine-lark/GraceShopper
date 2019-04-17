@@ -35,8 +35,12 @@ export default function(state = initialState, action) {
 
 export const fetchProducts = () => {
     return dispatch => {
-         axios.get('/products/')
-            .then(({data}) => dispatch(getProducts(data.products)))
+        axios.get('/api/products')
+        .then(res => res.data)
+         .then(products => {
+             const action = getProducts(products)
+             dispatch(action)
+            })
             .catch(err => console.error('Failed to get products', err))
     }
 }

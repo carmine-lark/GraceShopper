@@ -6,15 +6,15 @@ const OrderProduct = db.model('orderproduct')
 const Order = db.model('order')
 const Product = db.model('product')
 
-xdescribe('OrderProduct model', () => {
-  beforeEach(async() => {
+describe('OrderProduct model', () => {
+  beforeEach(() => {
 
     return db.sync({force: true})
 
   })
 
   describe("Validations", ()=>{
-    it('requires a quantity',()=>{
+    it('requires a quantity', async ()=>{
 
       const madeleine = await Product.build({
         name: 'Madeleine',
@@ -29,7 +29,8 @@ xdescribe('OrderProduct model', () => {
 
       const orderproduct = OrderProduct.build({
         productId: madeleine.id,
-        orderId: order.id
+        orderId: order.id,
+        quantity: 1
       })
       try{
         await orderproduct.validate()
@@ -38,7 +39,7 @@ xdescribe('OrderProduct model', () => {
         expect(err.message).to.contain('quantity can not be null')
       }
     })
-    it('requires must have a quantity greater than 0',()=>{
+    it('requires must have a quantity greater than 0', async ()=>{
 
       const madeleine = await Product.build({
         name: 'Madeleine',

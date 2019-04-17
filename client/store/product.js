@@ -6,7 +6,7 @@ const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 
 //INITIAL STATE
 
-const products = []
+const initalState = []
 
 
 // Action Creators
@@ -15,7 +15,7 @@ const removeProduct = (productId) => ({type: REMOVE_PRODUCT, productId})
 
 // Reducer
 
-export default function(state = products, action) {
+export default function(state = initalState, action) {
     switch (action.type){
         case GET_ALL_PRODUCTS:
             return action.products 
@@ -26,10 +26,17 @@ export default function(state = products, action) {
 
 //Thunk
 
+
+
 export const fetchProduct = () => {
+    console.log('thunk')
     return dispatch => {
-         axios.get('/products/')
-            .then(({data}) => dispatch(getProducts(data.products)))
+        axios.get('/api/products')
+        .then(res => res.data)
+         .then(products => {
+             const action = getProducts(products)
+             dispatch(action)
+            })
             .catch(err => console.error('Failed to get products', err))
     }
 }

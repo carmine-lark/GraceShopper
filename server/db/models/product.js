@@ -11,10 +11,10 @@ const Product = db.define('product', {
         allowNull: false
     },
     price: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.INTEGER,
         validate: {
             notEmpty: true,
-            min: 0.99
+            min: 1
         },
         allowNull: false
     },
@@ -22,7 +22,8 @@ const Product = db.define('product', {
         type: Sequelize.TEXT
     },
     image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        // add default img
     }
 })
 

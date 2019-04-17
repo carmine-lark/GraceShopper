@@ -9,6 +9,7 @@ const OrderProduct = db.define('orderProduct', {
         },
         allowNull: false
     },
+    // no need to remove upon checkout ... freeze price per product on model as well, for future reference
 })
 
 

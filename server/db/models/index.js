@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const User = require('./user')
 const Product = require('./product')
-const Order = require('./order')
+const Cart = require('./cart')
 const OrderProduct = require('./orderproduct')
 
 /**
@@ -18,15 +18,16 @@ const OrderProduct = require('./orderproduct')
  * instead of: const User = require('../db/models/user')
  */
 
-Order.belongsTo(User)
-Order.hasMany(OrderProduct)
-OrderProduct.belongsTo(Order)
+Cart.belongsTo(User)
+User.hasMany(Cart)
+Cart.hasMany(OrderProduct)
+OrderProduct.belongsTo(Cart)
 Product.hasMany(OrderProduct)
 OrderProduct.belongsTo(Product)
 
 module.exports = {
   User,
   Product,
-  Order,
+  Cart,
   OrderProduct
 }

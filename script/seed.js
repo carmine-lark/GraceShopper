@@ -2,7 +2,7 @@
 
 const db = require('../server/db')
 
-const { Product, User, OrderProduct, Order } = require('../server/db/models')
+const { Product, User, OrderProduct, Cart } = require('../server/db/models')
 
 
 
@@ -15,10 +15,10 @@ async function seed() {
     Product.create({ name: 'Choclate Chip', price: 34, description: 'tasty treat', image: 'example.png' }),
     User.create({ name: 'Cody', address: '101 Dalmation Lane', email: 'cody@email.com', password: '123' }),
     User.create({ name: 'Murphy', address: '404 Persian Lane', email: 'murphy@email.com', password: '123' }),
-    Order.create({ isOrder: true }),
-    Order.create({ isOrder: false }),
-    OrderProduct.create({ quantity: 4, productid: 1, orderid: 2 }),
-    OrderProduct.create({ quantity: 2, productid: 2, orderid: 2 })
+    Cart.create({ status: 'in-Cart' }),
+    Cart.create({ status: 'in-Cart' }),
+    OrderProduct.create({ quantity: 4, productid: 1, cartid: 2, storedPrice: 0 }),
+    OrderProduct.create({ quantity: 2, productid: 2, cartid: 2, storedPrice: 1 })
   ])
 
   // console.log(`seeded ${users.length} users`)

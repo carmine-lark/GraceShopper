@@ -1,7 +1,7 @@
 const {expect} = require('chai')
 const db = require('../index')
 const OrderProduct = db.model('orderproduct')
-const Order = db.model('order')
+const Cart = db.model('Cart')
 const Product = db.model('product')
 
 describe('Order model', () => {

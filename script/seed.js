@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {Product} = require('../server/db/models')
+const {Product, User} = require('../server/db/models')
 
 
 async function seed() {

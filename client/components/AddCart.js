@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addToCartThunk } from '../store/AddCart'
+import { addToCartThunk } from '../store/cart'
 
 class AddCart extends Component {
     constructor(props) {
@@ -9,7 +9,7 @@ class AddCart extends Component {
     }
 
     handleClick() {
-        this.props.add(this.props.prodId)
+        this.props.add(this.props.prod)
     }
     render() {
         return (

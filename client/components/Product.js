@@ -16,7 +16,7 @@ class Product extends React.Component {
         return (
           <div key={prod.id}>
             {prod.name}
-            < AddCart prodId={prod.id} />
+            < AddCart prod={prod} />
           </div>
         )
       })}

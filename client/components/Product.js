@@ -1,6 +1,7 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import {fetchProducts} from '../store/product'
+import AddCart from './AddCart';
 
 class Product extends React.Component {
   componentDidMount() {
@@ -20,6 +21,7 @@ class Product extends React.Component {
           {this.props.products.map(prod => {
             return <div key={prod.id}>{prod.name}</div>
           })}
+          < AddCart prod={prod} />
         </div>
         <br />
         <button>click</button>

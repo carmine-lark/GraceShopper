@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 class SingleProduct extends Component {
-
-  componentDidMount() {
+  constructor(props) {
+    super(props)
+  }
+  componentDidMount() {    
     this.props.fetchProduct(prodId)
   }
 

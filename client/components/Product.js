@@ -1,6 +1,7 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {fetchProduct} from '../store/product'
+import { connect } from 'react-redux'
+import { fetchProduct } from '../store/product'
+import AddCart from './AddCart';
 
 class Product extends React.Component {
   componentDidMount() {
@@ -11,12 +12,15 @@ class Product extends React.Component {
   render() {
     console.log('Product Component', this.props)
     return (
-        <div>{this.props.product.map(prod => {
-            return (
-                <div>{prod.name}</div>
-            )
-        })}
-        </div>
+      <div>{this.props.product.map(prod => {
+        return (
+          <div key={prod.id}>
+            {prod.name
+              < AddCart prodId={prod.id}/>
+                </div>
+        )
+      })}
+      </div>
     )
   }
 }

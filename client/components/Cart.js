@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {fetchCart} from '../store/cart'
+import RemoveItem from  './removeItem'
 
 class Cart extends Component {
   componentDidMount() {
@@ -13,11 +14,13 @@ class Cart extends Component {
             {
               this.props.cartItems.map(item => { 
                 return (
-                  <h3>
+                  <div>
                     {
                       item.name
+                      
                     }
-                  </h3>
+                    <RemoveItem prodId={item.id}/>
+                  </div>
                 )
               })
             }

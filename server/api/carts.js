@@ -56,6 +56,7 @@ router.post('/orderProducts', async(req, res, next)=>{
     orderProduct.forEach(op => op.destroy())
 
 
+
   }catch(err){
     next(err)
   }

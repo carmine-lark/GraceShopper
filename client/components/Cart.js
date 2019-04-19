@@ -12,12 +12,12 @@ class Cart extends Component {
     return (
         <div>
             {
-              this.props.cartItems.map(item => { 
+              this.props.cartItems.map(item => {
                 return (
-                  <div>
+                  <div key={item.id}>
                     {
                       item.name
-                      
+
                     }
                     <RemoveItem prodId={item.id}/>
                   </div>

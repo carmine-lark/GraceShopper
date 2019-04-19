@@ -10,7 +10,7 @@ class Product extends React.Component {
   }
 
   handleSubmit () {
-    
+
   }
 
   render() {
@@ -19,12 +19,13 @@ class Product extends React.Component {
       <div>
         <div>
           {this.props.products.map(prod => {
-            return <div key={prod.id}>{prod.name}</div>
+            return (<div key={prod.id}>{prod.name}
+            < AddCart prod={prod} /></div>)
           })}
-          < AddCart prod={prod} />
+
         </div>
         <br />
-        <button>click</button>
+        <button type='button'>click</button>
         <br />
         <div />
       </div>

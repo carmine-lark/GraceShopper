@@ -6,11 +6,11 @@ class SingleProduct extends Component {
   constructor(props) {
     super(props)
   }
-  componentDidMount() {    
+  componentDidMount() {
     // this.props.fetchProduct()
   }
 
-  
+
 
   render () {
     return (

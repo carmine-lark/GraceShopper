@@ -1,9 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {fetchCart} from '../store/cart'
+import {fetchCart, loadCartThunk} from '../store/cart'
 import RemoveItem from  './removeItem'
 
+
 class Cart extends Component {
+  constructor(props){
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick(){
+    console.log(this.props.userId)
+    this.props.loadCartThunk(this.props.userId)
+  }
+
   componentDidMount() {
     this.props.fetch()
   }
@@ -24,18 +35,23 @@ class Cart extends Component {
                 )
               })
             }
+            <button onClick={this.handleClick}>Click</button>
         </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-   cartItems: state.cart.cartItems
+   cartItems: state.cart.cartItems,
+   userId: state.user.id
 })
 
 const mapDispatchToProps = dispatch => ({
   fetch: () => {
     dispatch(fetchCart())
+  },
+  loadCartThunk: (userId)=> {
+    dispatch(loadCartThunk(userId))
   }
 })
 

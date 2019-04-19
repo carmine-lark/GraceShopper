@@ -23,12 +23,12 @@ const saveCart = () => ({type: SAVE_CART})
 //Saves Cart as Order, adding all cartItems as OrderProducts with Price
 const orderCart = () => ({type: ORDER_CART})
 //Loads the Cart associated with the cart's user
-const loadCart = productList => ({type: LOAD_CART, productList})
+const loadCart = (products, quantity) =>({type: LOAD_CART, products, quantity})
 
 export default function(state = initialState, action) {
     switch (action.type) {
         case GET_CART:
-          return {...state, cartItems: state.cartItems}
+        return {...state, cartItems: state.cartItems}
         case ADD_PRODUCT:
         console.log(store)
           if (state.cartItems.includes(action.product)) {
@@ -41,6 +41,8 @@ export default function(state = initialState, action) {
           let newQuantity = Object.assign({}, state.quantity)
           delete newQuantity[prodId]
           return {... state, cartItems: state.cartItems.filter( item => item.id!== action.productId), quantity: newQuantity}
+        case LOAD_CART:
+          return {... state, cartItems: action.products, quantity: action.quantity}
         default:
 
           return state
@@ -54,16 +56,19 @@ export const addToCartThunk = (product) => {
     }
 }
 
-export const fetchCartThunk = userId => {
+export const loadCartThunk = userId => {
     return dispatch => {
-        const action= {}
         axios.get(`/users/${userId}/cart`)
           .then(res => res.data)
           .then(cart =>{
             let holdArr =[]
-            cart.orderProducts.forEach(orderProduct=> holdArr.push(orderProduct.product))
-            dispatch(loadCart(holdArr)) 
-          })
+            let holdQuan = {}
+            cart.orderProducts.forEach(orderProduct=> {
+                holdArr.push(orderProduct.product)
+                holdQuan[orderProduct.productId] = orderProduct.quantity
+            })
+            dispatch(loadCart(holdArr, holdQuan)) 
+          }).catch(err=>{console.error(err)})
 
     }
 }

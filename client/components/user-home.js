@@ -1,15 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {fetchCartThunk} from '../store/cart'
+import {loadCartThunk} from '../store/cart'
 /**
  * COMPONENT
  */
 class UserHome extends React.Component {
-  constructor(props) {
-    super(props)
 
-  }
 
    componentDidMount() {
       console.log('match.....', this.props.match)
@@ -19,7 +16,7 @@ class UserHome extends React.Component {
  render() {
    return (
      <div>
-       <h3>Welcome, {email}</h3>
+       <h3>Welcome, {this.props.email}</h3>
      </div>
    )
  }
@@ -35,7 +32,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-   fetch: userid => dispatch(fetchCartThunk(userid))
+   fetch: userid => dispatch(loadCartThunk(userid))
 })
 
 export default connect(mapState)(UserHome)

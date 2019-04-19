@@ -59,8 +59,7 @@ export const addToCartThunk = (product) => {
 export const loadCartThunk = () => {
     return async dispatch => {
         try {
-            const {data} = await axios.get('/carts/orderProducts')
-            console.log(data)
+            const {data} = await axios.get('/api/carts/orderProducts')
             const action = loadCart(data[0], data[1])
             dispatch(action)
         } catch (err) {
@@ -74,6 +73,16 @@ export const fetchCart = () => {
         const action = getCart()
         dispatch(action)
     }
+}
+
+export const saveCartThunk = () =>{
+  return dispatch =>{
+    try{
+
+    }catch(err){
+      console.error(err)
+    }
+  }
 }
 
 export const removeItemThunk = productId =>{

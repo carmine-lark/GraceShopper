@@ -15,9 +15,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/orderProducts', async(req,res, next)=>{
     try{
-        let data 
+        let data
         if (!req.session.passport){
-            data ={'hello': 'hello'}
+            data =[[],{}]
         }else {
             let cart = await Cart.findOne({
                 where: {userId: req.session.passport.user,
@@ -35,6 +35,7 @@ router.get('/orderProducts', async(req,res, next)=>{
             })
             data= [products, quantity]
         }
+        console.log('dataStuff', data)
         res.status(200).send(data)
 
     }catch(err){
@@ -42,3 +43,20 @@ router.get('/orderProducts', async(req,res, next)=>{
     }
 })
 
+router.post('/orderProducts', async(req, res, next)=>{
+  try{
+    let data
+    let cart = await Cart.findOne({
+      where: {userId: req.session.passport.user,
+              status: 'inCart'}
+    })
+    let orderProduct = await OrderProduct.findAll({
+      where: {cartId: cart.id}
+    })
+    orderProduct.forEach(op => op.destroy())
+
+
+  }catch(err){
+    next(err)
+  }
+})

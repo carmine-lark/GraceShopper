@@ -25,7 +25,6 @@ class Product extends React.Component {
 
         </div>
         <br />
-        <button type='button'>click</button>
         <br />
         <div />
       </div>

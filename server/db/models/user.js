@@ -32,7 +32,7 @@ const User = db.define('user', {
       return () => this.getDataValue('salt')
     }
   },
-  googleid: {
+  googleId: {
     type: Sequelize.STRING
   },
   address: {

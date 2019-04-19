@@ -62,9 +62,16 @@ export const fetchCartThunk = userId => {
           .then(cart =>{
             let holdArr =[]
             cart.orderProducts.forEach(orderProduct=> holdArr.push(orderProduct.product))
-
+            dispatch(loadCart(holdArr)) 
           })
 
+    }
+}
+
+export const fetchCart = () => {
+    return dispatch => {
+        const action = getCart()
+        dispatch(action)
     }
 }
 

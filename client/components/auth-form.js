@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {addUserThunk} from '../store/user'
+import {fetchCartThunk} from '../store/cart'
 
 /**
  * COMPONENT
@@ -26,10 +27,10 @@ const AuthForm = props => {
           <input name="password" type="password" />
         </div>
         <div>
-          <label htmlFor="name">
+          <label htmlFor="username">
             <small>name</small>
           </label>
-          <input name="name" type="name" />
+          <input name="username" type="username" />
         </div>
         <div>
           <label htmlFor="address">
@@ -73,14 +74,12 @@ const mapSignup = state => {
 const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
+      console.log(evt.target, evt.target.name)
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      const address = evt.target.address.value
-      const name = evt.target.name.value
-      dispatch(auth(email, password, address, name, formName))
-      dispatch(addUserThunk({email, password, address, name}))
+      dispatch(auth(email, password, formName))
     }
   }
 }

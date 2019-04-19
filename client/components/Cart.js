@@ -12,7 +12,7 @@ class Cart extends Component {
 
   handleClick(){
     console.log(this.props.userId)
-    this.props.loadCartThunk(this.props.userId)
+    this.props.loadCartThunk()
   }
 
   componentDidMount() {
@@ -50,8 +50,8 @@ const mapDispatchToProps = dispatch => ({
   fetch: () => {
     dispatch(fetchCart())
   },
-  loadCartThunk: (userId)=> {
-    dispatch(loadCartThunk(userId))
+  loadCartThunk: ()=> {
+    dispatch(loadCartThunk())
   }
 })
 

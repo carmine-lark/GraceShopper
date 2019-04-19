@@ -56,20 +56,16 @@ export const addToCartThunk = (product) => {
     }
 }
 
-export const loadCartThunk = userId => {
-    return dispatch => {
-        axios.get(`/users/${userId}/cart`)
-          .then(res => res.data)
-          .then(cart =>{
-            let holdArr =[]
-            let holdQuan = {}
-            cart.orderProducts.forEach(orderProduct=> {
-                holdArr.push(orderProduct.product)
-                holdQuan[orderProduct.productId] = orderProduct.quantity
-            })
-            dispatch(loadCart(holdArr, holdQuan)) 
-          }).catch(err=>{console.error(err)})
-
+export const loadCartThunk = () => {
+    return async dispatch => {
+        try {
+            const {data} = await axios.get('/carts/orderProducts')
+            console.log(data)
+            const action = loadCart(data[0], data[1])
+            dispatch(action)
+        } catch (err) {
+            console.error(err)
+        }
     }
 }
 

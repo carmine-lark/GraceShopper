@@ -28,15 +28,19 @@ router.put('/:id', async (req, res, next) => { // check if user id is === to the
 
 router.get('/:id/cart', async(req, res, next)=>{
   try {
-    const carts = await Cart.findAll(
+    if (!req.session.user){
+      req.session.cart= ['test']
+    }else 
+      console.log(req.session.user)
+      req.session.cart = await Cart.findAll(
       {
-        where:{userId: req.params.id,
+        where:{userId: req.session.user.id,
               status: 'inCart'
           },
           include: [{model: OrderProduct, include: [{model: Product}]}]
       }
     )
-    res.status(201).send(carts)
+    console.log(req.session.cart)
   } catch (err) {
     next(err)
   }

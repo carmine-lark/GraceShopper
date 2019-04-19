@@ -23,12 +23,11 @@ const saveCart = () => ({type: SAVE_CART})
 //Saves Cart as Order, adding all cartItems as OrderProducts with Price
 const orderCart = () => ({type: ORDER_CART})
 //Loads the Cart associated with the cart's user
-const loadCart = productList => ({type: LOAD_CART, productList})
 
 export default function(state = initialState, action) {
     switch (action.type) {
         case GET_CART:
-          return {...state, cartItems: state.cartItems}
+        return {...state, cartItems: state.cartItems}
         case ADD_PRODUCT:
         console.log(store)
           if (state.cartItems.includes(action.product)) {
@@ -54,17 +53,10 @@ export const addToCartThunk = (product) => {
     }
 }
 
-export const fetchCartThunk = userId => {
+export const fetchCart = userId => {
     return dispatch => {
-        const action= {}
-        axios.get(`/users/${userId}/cart`)
-          .then(res => res.data)
-          .then(cart =>{
-            let holdArr =[]
-            cart.orderProducts.forEach(orderProduct=> holdArr.push(orderProduct.product))
-
-          })
-
+        const action = getCart()
+        dispatch(action)
     }
 }
 

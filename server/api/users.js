@@ -4,14 +4,14 @@ module.exports = router
 
 router.post('/', async (req, res, next) => {
   try {
-    const user = await User.create(req.body)
+    const user = await User.create(req.body) // be clear about what we will allow a user to create
     res.status(201).send(user)
   } catch (err) {
     next(err)
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => { // check if user id is === to the user being updated
   try {
     const user = await User.update(
       req.body
@@ -90,7 +90,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => { // check for user id
   try {
     const user = await User.findOne(
       {

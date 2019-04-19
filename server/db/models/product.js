@@ -14,7 +14,7 @@ const Product = db.define('product', {
         type: Sequelize.INTEGER,
         validate: {
             notEmpty: true,
-            min: 100
+            min: 0
         },
         allowNull: false
     },
@@ -22,7 +22,8 @@ const Product = db.define('product', {
         type: Sequelize.TEXT
     },
     image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        // add default img
     }
 })
 

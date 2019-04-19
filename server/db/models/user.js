@@ -14,6 +14,7 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false
+    // add isEMAIL validation
   },
   password: {
     type: Sequelize.STRING,
@@ -35,7 +36,7 @@ const User = db.define('user', {
     type: Sequelize.STRING
   },
   address: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false
   },
   isAdmin: {

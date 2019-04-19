@@ -26,11 +26,14 @@ router.put('/:id', async (req, res, next) => { // check if user id is === to the
   }
 })
 
-router.get('/:id/carts', async(req, res, next)=>{
+router.get('/:id/cart', async(req, res, next)=>{
   try {
     const carts = await Cart.findAll(
       {
-        where:{userId: req.params.id}
+        where:{userId: req.params.id,
+              status: 'inCart'
+          },
+          include: [{model: OrderProduct, include: [{model: Product}]}]
       }
     )
     res.status(201).send(carts)

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import store from './index'
 
 const initialState = {
     cartItems: [],
@@ -9,30 +10,40 @@ const initialState = {
 const GET_CART = 'GET_CART'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const REMOVE_ITEM = 'REMOVE_ITEM'
+const SAVE_CART = 'SAVE_CART'
+const ORDER_CART = 'ORDER_CART'
+const LOAD_CART = 'LOAD_CART'
 
 
 const getCart = () => ({type: GET_CART})
 const addToCart = product => ({ type: ADD_PRODUCT, product })
 const removeItem = (productId) => ({type: REMOVE_ITEM, productId})
-
+//Saves Cart to the Database for multi-browser usage, adding all cartItems as OrderProducts without Price
+const saveCart = () => ({type: SAVE_CART})
+//Saves Cart as Order, adding all cartItems as OrderProducts with Price
+const orderCart = () => ({type: ORDER_CART})
+//Loads the Cart associated with the cart's user
+const loadCart = productList => ({type: LOAD_CART, productList})
 
 export default function(state = initialState, action) {
     switch (action.type) {
         case GET_CART:
-            return {...state, cartItems: state.cartItems}
+          return {...state, cartItems: state.cartItems}
         case ADD_PRODUCT:
-            if (state.cartItems.includes(action.product)) {
-              return {...state, quantity: {...state.quantity, [action.product.id]: state.quantity[action.product.id] + 1}}
-            } else {
-                return { ...state, cartItems: [...state.cartItems, action.product], quantity: {...state.quantity, [action.product.id]: 1} }
-            }
+        console.log(store)
+          if (state.cartItems.includes(action.product)) {
+            return {...state, quantity: {...state.quantity, [action.product.id]: state.quantity[action.product.id] + 1}}
+          } else {
+            return { ...state, cartItems: [...state.cartItems, action.product], quantity: {...state.quantity, [action.product.id]: 1} }
+          }
         case REMOVE_ITEM:
-            let prodId = action.productId
-            let newQuantity = Object.assign({}, state.quantity)
-            delete newQuantity[prodId]
-            return {... state, cartItems: state.cartItems.filter( item => item.id!== action.productId), quantity: newQuantity}
+          let prodId = action.productId
+          let newQuantity = Object.assign({}, state.quantity)
+          delete newQuantity[prodId]
+          return {... state, cartItems: state.cartItems.filter( item => item.id!== action.productId), quantity: newQuantity}
         default:
-            return state
+
+          return state
     }
 }
 
@@ -43,10 +54,17 @@ export const addToCartThunk = (product) => {
     }
 }
 
-export const fetchCart = () => {
+export const fetchCartThunk = userId => {
     return dispatch => {
-        const action = getCart()
-        dispatch(action)
+        const action= {}
+        axios.get(`/users/${userId}/cart`)
+          .then(res => res.data)
+          .then(cart =>{
+            let holdArr =[]
+            cart.orderProducts.forEach(orderProduct=> holdArr.push(orderProduct.product))
+
+          })
+
     }
 }
 
@@ -55,4 +73,10 @@ export const removeItemThunk = productId =>{
         const action = removeItem( productId)
         dispatch( action )
     }
+}
+
+export const saveCartThunk = () =>{
+  return dispatch=>{
+    axios.post(`/api/carts`)
+  }
 }

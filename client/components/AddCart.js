@@ -13,7 +13,7 @@ class AddCart extends Component {
     }
     render() {
         return (
-            <button onClick={this.handleClick}>Add To Cart</button>
+            <button key={this.props.prod.id} type='button' onClick={this.handleClick}>Add To Cart</button>
         )
     }
 }

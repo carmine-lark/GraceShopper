@@ -16,6 +16,7 @@ router.get('/', async (req, res, next) => {
 router.get('/orderProducts', async(req,res, next)=>{
     try{
         let data
+        console.log(req.session)
         if (!req.session.passport){
             data =[[],{}]
         }else {

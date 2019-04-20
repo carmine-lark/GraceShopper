@@ -7,6 +7,23 @@ const initialState = {
     quantity: {}
 }
 
+
+//Array.include(Object) does not work, so I guess I'll just add my own Object Equality Checker.
+//So, this is actually a bit of a problem- the objects loaded from our backend are actually unique objects, and therefore do not reference the Products we pulled from the store
+//The ideal solution would be to complete rewrite cartItems to only store product.ids and convert the product store to store products in an Object. This would enable us to pull the data using the product id as a key.
+//function containsObj- returns a boolean check and figures out if the given object exists in the given array.
+const containsObject = (obj, arr)=>{
+  let ansBool= false
+  arr.map(item=>{
+    if (item.hasOwnProperty('id') && item.id===obj.id){
+      console.log('check', obj.id)
+      ansBool = true
+    }
+  })
+  return ansBool;
+}
+
+
 const GET_CART = 'GET_CART'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const REMOVE_ITEM = 'REMOVE_ITEM'
@@ -31,9 +48,11 @@ export default function(state = initialState, action) {
         return {...state, cartItems: state.cartItems}
         case ADD_PRODUCT:
         console.log(store)
-          if (state.cartItems.includes(action.product)) {
-            return {...state, quantity: {...state.quantity, [action.product.id]: state.quantity[action.product.id] + 1}}
+          if (containsObject(action.product, state.cartItems)) {
+            console.log('gotcha', action.product)
+            return {...state, quantity: {...state.quantity, [action.product.id]: (state.quantity[action.product.id] + 1)}}
           } else {
+            console.log('failure', action.product)
             return { ...state, cartItems: [...state.cartItems, action.product], quantity: {...state.quantity, [action.product.id]: 1} }
           }
         case REMOVE_ITEM:
@@ -78,7 +97,7 @@ export const fetchCart = () => {
 export const saveCartThunk = () =>{
   return dispatch =>{
     try{
-
+      console.log(this.cartItems)
     }catch(err){
       console.error(err)
     }
@@ -92,8 +111,8 @@ export const removeItemThunk = productId =>{
     }
 }
 
-export const saveCartThunk = () =>{
-  return dispatch=>{
-    axios.post(`/api/carts`)
-  }
-}
+// export const saveCartThunk = () =>{
+//   return dispatch=>{
+//     axios.post(`/api/carts`)
+//   }
+// }

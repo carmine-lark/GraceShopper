@@ -2,9 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-import {addUserThunk} from '../store/user'
-import {fetchCartThunk} from '../store/cart'
-
 /**
  * COMPONENT
  */
@@ -78,8 +75,10 @@ const mapDispatch = dispatch => {
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
+      const userName = evt.target.username.value
+      const address = evt.target.address.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      dispatch(auth(email, password, userName, address, formName))
     }
   }
 }

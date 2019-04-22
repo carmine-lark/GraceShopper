@@ -41,6 +41,7 @@ export const fetchProducts = () => {
         axios.get('/api/products')
         .then(res => res.data)
          .then(products => {
+             console.log(products)
              const action = getProducts(products)
              dispatch(action)
             })

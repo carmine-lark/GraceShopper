@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {addUserThunk} from '../store/user'
+import {fetchCartThunk} from '../store/cart'
 
 /**
  * COMPONENT

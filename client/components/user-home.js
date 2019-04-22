@@ -1,18 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-
+import {loadCartThunk} from '../store/cart'
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {email} = props
+class UserHome extends React.Component {
 
-  return (
-    <div>
-      <h3>Welcome, {email}</h3>
-    </div>
-  )
+
+   componentDidMount() {
+      console.log('match.....', this.props.match)
+   }
+
+
+ render() {
+   return (
+     <div>
+       <h3>Welcome, {this.props.email}</h3>
+     </div>
+   )
+ }
 }
 
 /**
@@ -23,6 +30,10 @@ const mapState = state => {
     email: state.user.email
   }
 }
+
+const mapDispatch = dispatch => ({
+   fetch: userid => dispatch(loadCartThunk(userid))
+})
 
 export default connect(mapState)(UserHome)
 

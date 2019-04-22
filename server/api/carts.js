@@ -8,7 +8,8 @@ router.get('/', async (req, res, next) => {
     const order = await Cart.findAll({
       attributes: ['userId']
     })
-    res.send(order)
+    req.session.cart = order
+    res.send(req.session.cart)
   } catch (err) {
     next(err)
   }
@@ -40,7 +41,9 @@ router.get('/orderProducts', async (req, res, next) => {
         if (!req.session.cart.includes(op.id))
         {req.session.cart.push(op.id)}
       })
-      data = [products, quantity]
+      req.session.cart = products
+      req.session.quantity = quantity
+      data = [req.session.cart, req.session.quantity]
     }
     console.log('dataStuff', data)
     res.status(200).send(data)
@@ -71,11 +74,8 @@ router.post('/', async (req, res, next) => {
     orderProduct.forEach(op => op.destroy())
     console.log()
     state.cartItems.map(item=>{
-      OrderProduct.create({
-        quantity: state.quantity[item.id],
-        storedPrice: 0,
-        cartId: cart.id,
-        productId: item.id
+      item.update({
+        quantity: req.session.quantity[item.id],
       })
     })
   } catch (err) {
@@ -103,11 +103,11 @@ router.post('/order', async (req, res, next) => {
       where: {cartId: cart.id}
     })
     await cart.update({status:'ordered'})
-    orderProduct.forEach(op => op.destroy())
+    // orderProduct.forEach(op => op.destroy())
     console.log()
     state.cartItems.map(item=>{
-      OrderProduct.create({
-        quantity: state.quantity[item.id],
+      OrderProduct.update({
+        quantity: req.session.quantity[item.id],
         storedPrice: item.price,
         cartId: cart.id,
         productId: item.id

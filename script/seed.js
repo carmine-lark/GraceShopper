@@ -13,7 +13,7 @@ async function seed() {
   await Promise.all([
     Product.create(
       { name: 'Madeleine', price: 34, description: 'tasty treat', image: 'example.png' }),
-      Product.create({ name: 'Choclate Chip', price: 34, description: 'tasty treat', image: 'example.png' }),
+      Product.create({ name: 'Chocolate Chip', price: 34, description: 'tasty treat', image: 'example.png' }),
       User.create({ name: 'Cody', address: '101 Dalmation Lane', email: 'cody@email.com', password: '123' }),
       User.create({ name: 'Murphy', address: '404 Persian Lane', email: 'murphy@email.com', password: '123' }),
       Cart.create({ status: 'inCart' }),

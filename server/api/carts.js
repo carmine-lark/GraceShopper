@@ -8,8 +8,7 @@ router.get('/', async (req, res, next) => {
     const order = await Cart.findAll({
       attributes: ['userId']
     })
-    req.session.cart = order
-    res.send(req.session.cart)
+    res.send(order)
   } catch (err) {
     next(err)
   }
@@ -36,16 +35,16 @@ router.get('/orderProducts', async (req, res, next) => {
       let quantity = {}
       req.session.cart = []
       orderProduct.forEach(async op => {
-        quantity[op.product.id] = op.quantity
+        req.session.quantity[op.product.id] = op.quantity
         products.push(op.product)
+        console.log('op.product', op.product)
         if (!req.session.cart.includes(op.id))
-        {req.session.cart.push(op.id)}
+        {req.session.cart.push(op.product)}
       })
-      req.session.cart = products
-      req.session.quantity = quantity
+      console.log('req.session cart', req.session.quantity)
+
       data = [req.session.cart, req.session.quantity]
     }
-    console.log('dataStuff', data)
     res.status(200).send(data)
   } catch (err) {
     next(err)
@@ -74,8 +73,11 @@ router.post('/', async (req, res, next) => {
     orderProduct.forEach(op => op.destroy())
     console.log()
     state.cartItems.map(item=>{
-      item.update({
-        quantity: req.session.quantity[item.id],
+      OrderProduct.create({
+        quantity: state.quantity[item.id],
+        storedPrice: 0,
+        cartId: cart.id,
+        productId: item.id
       })
     })
   } catch (err) {
@@ -103,11 +105,11 @@ router.post('/order', async (req, res, next) => {
       where: {cartId: cart.id}
     })
     await cart.update({status:'ordered'})
-    // orderProduct.forEach(op => op.destroy())
+    orderProduct.forEach(op => op.destroy())
     console.log()
     state.cartItems.map(item=>{
-      OrderProduct.update({
-        quantity: req.session.quantity[item.id],
+      OrderProduct.create({
+        quantity: state.quantity[item.id],
         storedPrice: item.price,
         cartId: cart.id,
         productId: item.id

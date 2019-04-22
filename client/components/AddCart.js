@@ -9,7 +9,7 @@ class AddCart extends Component {
     }
 
     handleClick() {
-        this.props.add(this.props.prod)
+        this.props.add(this.props.prod, this.props.quantity)
     }
     render() {
         return (
@@ -18,9 +18,14 @@ class AddCart extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+  cartItems: state.cart.cartItems,
+  quantity: state.cart.quantity
 
-const mapDispatchToProps = dispatch => ({
-    add: (prodId) => dispatch(addToCartThunk(prodId))
 })
 
-export default connect(null, mapDispatchToProps)(AddCart)
+const mapDispatchToProps = dispatch => ({
+    add: (prodId, quantity) => dispatch(addToCartThunk(prodId, quantity))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCart)

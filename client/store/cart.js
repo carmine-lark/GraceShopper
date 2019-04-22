@@ -49,11 +49,10 @@ export default function(state = initialState, action) {
           ...state,
           quantity: {
             ...state.quantity,
-            [action.product.id]: state.quantity[action.product.id] + 1
+            [action.product.id]: state.quantity[action.product.id] + action.quantity
           }
         }
       } else {
-        console.log(session.cart)
         return {
           ...state,
           cartItems: [...state.cartItems, action.product],
@@ -76,8 +75,10 @@ export default function(state = initialState, action) {
   }
 }
 
-export const addToCartThunk = product => {
-  return dispatch => {
+export const addToCartThunk = (product, quantity) => {
+  return async dispatch => {
+    console.log(quantity)
+    await axios.post(`/api/carts/${product.id}/add/`, quantity)
     const action = addToCart(product)
     dispatch(action)
   }

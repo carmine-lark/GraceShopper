@@ -4,11 +4,52 @@ const {Cart, User, Product, OrderProduct} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
+  console.log('initial session', req.session)
   try {
     const order = await Cart.findAll({
       attributes: ['userId']
     })
     res.send(order)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/:id/add', async(req, res, next)=>{
+  console.log('req.body', req.body)
+  let cart
+  let orderProduct
+  try {
+    if(!req.session){
+      cart = await Cart.create({
+        status: 'inCart'
+      })
+      req.session.cart = cart
+      req.session.cartId = cart.id
+    }else{
+      cart = await Cart.findOne({
+        where: {
+          // userId: req.session.passport.user
+        }
+      })
+      if (!cart){
+        cart = await Cart.create({
+          // userId: req.session.passport.user,
+          status: 'inCart'
+      })
+      }
+    }
+    req.session.cartId = cart.id
+    orderProduct = await OrderProduct.findOne({where:{productId: req.params.id, cartId: req.session.cartId}})
+    if (!orderProduct){
+      orderProduct = await OrderProduct.create({
+        cartId: req.session.cartId,
+        productId: req.params.id,
+        quantity: parseInt(req.body, 10),
+      })
+    }
+    await orderProduct.update({quantity: parseInt(req.body, 10)})
+
   } catch (err) {
     next(err)
   }

@@ -82,3 +82,38 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/order', async (req, res, next) => {
+  try {
+    let state = req.body
+    console.log('cartItems', state.cartItems)
+    let cart = await Cart.findOne({
+      where: {
+        userId: req.session.passport.user,
+        status: 'inCart'
+      }
+    })
+    if (!cart){
+      cart = await Cart.create({
+        userId: req.session.passport.user,
+        status: 'inCart'
+      })
+    }
+    let orderProduct = await OrderProduct.findAll({
+      where: {cartId: cart.id}
+    })
+    await cart.update({status:'ordered'})
+    orderProduct.forEach(op => op.destroy())
+    console.log()
+    state.cartItems.map(item=>{
+      OrderProduct.create({
+        quantity: state.quantity[item.id],
+        storedPrice: item.price,
+        cartId: cart.id,
+        productId: item.id
+      })
+    })
+  } catch (err) {
+    next(err)
+  }
+})

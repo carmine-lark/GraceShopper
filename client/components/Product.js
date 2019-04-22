@@ -19,8 +19,11 @@ class Product extends React.Component {
       <div>
         <div>
           {this.props.products.map(prod => {
-            return (<div key={prod.id}>{prod.name}
-            < AddCart prod={prod} /></div>)
+            return (
+            <div key={prod.id}>
+              {prod.name}
+            < AddCart prod={prod} />
+            </div>)
           })}
 
         </div>

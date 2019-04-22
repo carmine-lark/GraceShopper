@@ -35,7 +35,7 @@ router.get('/orderProducts', async (req, res, next) => {
       let quantity = {}
       req.session.cart = []
       orderProduct.forEach(async op => {
-        quantity[op.id] = op.quantity
+        quantity[op.product.id] = op.quantity
         products.push(op.product)
         if (!req.session.cart.includes(op.id))
         {req.session.cart.push(op.id)}
@@ -52,7 +52,7 @@ router.get('/orderProducts', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     let state = req.body
-    console.log(state)
+    console.log('cartItems', state.cartItems)
     let cart = await Cart.findOne({
       where: {
         userId: req.session.passport.user,
@@ -62,7 +62,18 @@ router.post('/', async (req, res, next) => {
     let orderProduct = await OrderProduct.findAll({
       where: {cartId: cart.id}
     })
-    orderProduct.forEach(op => console.log(op))
+    orderProduct.forEach(op => op.destroy())
+    console.log()
+    state.cartItems.map(item=>{
+      OrderProduct.create({
+        quantity: state.quantity[item.id],
+        storedPrice: 0,
+        cartId: cart.id,
+        productId: item.id
+      })
+      // op.setCart(cart.id)
+      // op.setProduct(item.id)
+    })
   } catch (err) {
     next(err)
   }

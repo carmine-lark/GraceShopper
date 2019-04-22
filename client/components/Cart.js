@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchCart, loadCartThunk} from '../store/cart'
 import RemoveItem from './removeItem'
+import SaveCart from './saveCart'
 
 class Cart extends Component {
   constructor(props) {
@@ -24,12 +25,14 @@ class Cart extends Component {
         {this.props.cartItems.map(item => {
           return (
             <div key={item.id}>
-              {item.name}
+              <div>{item.name}</div>
+              <div>{this.props.quantity[item.id]}</div>
               <RemoveItem prodId={item.id} />
             </div>
           )
         })}
-        <button onClick={this.handleClick}>Click</button>
+        <SaveCart />
+        <button type='button' onClick={this.handleClick}>Click</button>
       </div>
     )
   }
@@ -37,6 +40,7 @@ class Cart extends Component {
 
 const mapStateToProps = state => ({
   cartItems: state.cart.cartItems,
+  quantity: state.cart.quantity,
   userId: state.user.id
 })
 

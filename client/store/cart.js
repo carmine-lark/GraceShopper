@@ -102,11 +102,13 @@ export const fetchCart = () => {
   }
 }
 
-export const saveCartThunk = async () => {
+export const saveCartThunk = (cart) => {
   return async dispatch => {
     try {
-      console.log(this.cartItems)
-      const {data} = await axios.post('api/carts/', this.state)
+      const {data} = await axios.post('api/carts/', cart)
+      console.log('saveCartThunk', data)
+      const action = getCart()
+      dispatch(action)
     } catch (err) {
       console.error(err)
     }

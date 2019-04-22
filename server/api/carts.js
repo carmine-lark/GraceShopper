@@ -59,6 +59,12 @@ router.post('/', async (req, res, next) => {
         status: 'inCart'
       }
     })
+    if (!cart){
+      cart = await Cart.create({
+        userId: req.session.passport.user,
+        status: 'inCart'
+      })
+    }
     let orderProduct = await OrderProduct.findAll({
       where: {cartId: cart.id}
     })

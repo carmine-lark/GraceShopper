@@ -71,8 +71,6 @@ router.post('/', async (req, res, next) => {
         cartId: cart.id,
         productId: item.id
       })
-      // op.setCart(cart.id)
-      // op.setProduct(item.id)
     })
   } catch (err) {
     next(err)

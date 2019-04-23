@@ -3,7 +3,9 @@ const router = require('express').Router()
 const {Cart, Product, OrderProduct} = require('../db/models')
 module.exports = router
 
+// if req sesion change to req session cart
 router.get('/', async (req, res, next) => {
+  console.log(req.session)
   try {
     let cart =[]
     if (!req.session.passport){

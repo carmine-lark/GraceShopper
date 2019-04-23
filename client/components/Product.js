@@ -4,8 +4,8 @@ import AddCart from './AddCart';
 import { fetchProducts} from '../store/product'
 import SingleProduct from './SingleProduct';
 import { Link } from 'react-router-dom'
-import Button from '@material-ui/core/Button'
 
+import { Button } from 'reactstrap';
 
 class Product extends React.Component {
   componentDidMount() {

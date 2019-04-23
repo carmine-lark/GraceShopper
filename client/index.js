@@ -7,6 +7,7 @@ import store from './store'
 import App from './app'
 import Product from './components/Product'
 
+
 // establishes socket connection
 import './socket'
 

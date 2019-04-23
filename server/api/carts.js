@@ -3,7 +3,9 @@ const router = require('express').Router()
 const {Cart, User, Product, OrderProduct} = require('../db/models')
 module.exports = router
 
+// if req sesion change to req session cart
 router.get('/', async (req, res, next) => {
+  console.log(req.session)
   try {
     const order = await Cart.findAll({
       attributes: ['userId']
@@ -37,8 +39,9 @@ router.get('/orderProducts', async (req, res, next) => {
       orderProduct.forEach(async op => {
         quantity[op.product.id] = op.quantity
         products.push(op.product)
-        if (!req.session.cart.includes(op.id))
-        {req.session.cart.push(op.id)}
+        if (!req.session.cart.includes(op.id)) {
+          req.session.cart.push(op.id)
+        }
       })
       data = [products, quantity]
     }
@@ -59,7 +62,7 @@ router.post('/', async (req, res, next) => {
         status: 'inCart'
       }
     })
-    if (!cart){
+    if (!cart) {
       cart = await Cart.create({
         userId: req.session.passport.user,
         status: 'inCart'
@@ -70,7 +73,7 @@ router.post('/', async (req, res, next) => {
     })
     orderProduct.forEach(op => op.destroy())
     console.log()
-    state.cartItems.map(item=>{
+    state.cartItems.map(item => {
       OrderProduct.create({
         quantity: state.quantity[item.id],
         storedPrice: 0,
@@ -93,7 +96,7 @@ router.post('/order', async (req, res, next) => {
         status: 'inCart'
       }
     })
-    if (!cart){
+    if (!cart) {
       cart = await Cart.create({
         userId: req.session.passport.user,
         status: 'inCart'
@@ -102,10 +105,10 @@ router.post('/order', async (req, res, next) => {
     let orderProduct = await OrderProduct.findAll({
       where: {cartId: cart.id}
     })
-    await cart.update({status:'ordered'})
+    await cart.update({status: 'ordered'})
     orderProduct.forEach(op => op.destroy())
     console.log()
-    state.cartItems.map(item=>{
+    state.cartItems.map(item => {
       OrderProduct.create({
         quantity: state.quantity[item.id],
         storedPrice: item.price,

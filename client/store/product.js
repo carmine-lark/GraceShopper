@@ -51,8 +51,8 @@ export const fetchProducts = () => {
 
 export const fetchProduct = (prodId) =>{
   return dispatch =>{
-    axios.get(`/products/${prodId}`)
-      .then(({data}) => dispatch(getProduct(data.product)))
+    axios.get(`/api/products/${prodId}`)
+    .then(({data}) => dispatch(getProduct(data)))
       .catch(err => console.error('Failed to get product', err))
   }
 }

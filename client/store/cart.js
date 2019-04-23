@@ -30,7 +30,7 @@ const ORDER_CART = 'ORDER_CART'
 const LOAD_CART = 'LOAD_CART'
 
 const getCart = () => ({type: GET_CART})
-const addToCart = product => ({type: ADD_PRODUCT, product})
+export const addToCart = (product, number) => ({type: ADD_PRODUCT, product, number})
 const removeItem = productId => ({type: REMOVE_ITEM, productId})
 //Saves Cart to the Database for multi-browser usage, adding all cartItems as OrderProducts without Price
 const saveCart = () => ({type: SAVE_CART})
@@ -42,14 +42,15 @@ const loadCart = (products, quantity) => ({type: LOAD_CART, products, quantity})
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_CART:
-      return {...state, cartItems: state.cartItems}
+      return {...state, cartItems: action.cartItems}
     case ADD_PRODUCT:
       if (containsObject(action.product, state.cartItems)) {
+        console.log(action.number)
         return {
           ...state,
           quantity: {
             ...state.quantity,
-            [action.product.id]: state.quantity[action.product.id] + action.quantity
+            [action.product.id]: (state.quantity[action.product.id] + action.number)
           }
         }
       } else {
@@ -68,6 +69,8 @@ export default function(state = initialState, action) {
         cartItems: state.cartItems.filter(item => item.id !== action.productId),
         quantity: newQuantity
       }
+    case SAVE_CART:
+      return state;
     case LOAD_CART:
       return {...state, cartItems: action.products, quantity: action.quantity}
     default:
@@ -75,14 +78,14 @@ export default function(state = initialState, action) {
   }
 }
 
-export const addToCartThunk = (product, quantity) => {
-  return async dispatch => {
-    console.log(quantity)
-    await axios.post(`/api/carts/${product.id}/add/`, quantity)
-    const action = addToCart(product)
-    dispatch(action)
-  }
-}
+// export const addToCartThunk = (product, quantity) => {
+//   return async dispatch => {
+//     console.log('quantity', quantity)
+//     await axios.post(`/api/carts/${product.id}/add/`)
+//     const action = addToCart(product)
+//     dispatch(action)
+//   }
+// }
 
 export const loadCartThunk = () => {
   return async dispatch => {
@@ -108,7 +111,7 @@ export const saveCartThunk = (cart) => {
     try {
       const {data} = await axios.post('api/carts/', cart)
       console.log('saveCartThunk', data)
-      const action = getCart()
+      const action = getCart(data)
       dispatch(action)
     } catch (err) {
       console.error(err)

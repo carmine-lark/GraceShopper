@@ -1,16 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addToCartThunk } from '../store/cart'
+import { addToCart, loadCartThunk, saveCartThunk } from '../store/cart'
 
 class AddCart extends Component {
     constructor(props) {
         super(props)
+        this.state={
+          quantity: 1
+        }
         this.handleClick = this.handleClick.bind(this)
     }
 
-    handleClick() {
-        this.props.add(this.props.prod, this.props.quantity)
+    async handleClick() {
+        this.props.add(this.props.prod, this.state.quantity)
+        await this.props.saveCartThunk(this.props.cart)
+        await this.props.loadCartThunk(this.props.cart)
     }
+
+
+
     render() {
         return (
             <button key={this.props.prod.id} type='button' onClick={this.handleClick}>Add To Cart</button>
@@ -19,13 +27,14 @@ class AddCart extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  cartItems: state.cart.cartItems,
-  quantity: state.cart.quantity
-
+  cart: state.cart,
 })
 
 const mapDispatchToProps = dispatch => ({
-    add: (prodId, quantity) => dispatch(addToCartThunk(prodId, quantity))
+    add: (prodId, number) => dispatch(addToCart(prodId, number)),
+    loadCartThunk: () => dispatch(loadCartThunk()),
+    saveCartThunk: (cart) => dispatch(saveCartThunk(cart))
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCart)

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchCart, loadCartThunk} from '../store/cart'
+import {loadCartThunk} from '../store/cart'
 import RemoveItem from './removeItem'
 import SaveCart from './saveCart'
 
@@ -16,7 +16,7 @@ class Cart extends Component {
   }
 
   componentDidMount() {
-    this.props.fetch()
+    this.props.loadCartThunk()
   }
 
   render() {
@@ -45,9 +45,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetch: () => {
-    dispatch(fetchCart())
-  },
   loadCartThunk: () => {
     dispatch(loadCartThunk())
   }

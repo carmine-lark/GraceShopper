@@ -41,14 +41,15 @@ router.post('/:id/add', async(req, res, next)=>{
     }
     req.session.cartId = cart.id
     orderProduct = await OrderProduct.findOne({where:{productId: req.params.id, cartId: req.session.cartId}})
+    console.log('req.body', req.body)
     if (!orderProduct){
       orderProduct = await OrderProduct.create({
         cartId: req.session.cartId,
         productId: req.params.id,
-        quantity: parseInt(req.body, 10),
+        quantity: +req.body,
       })
     }
-    await orderProduct.update({quantity: parseInt(req.body, 10)})
+    await orderProduct.update({quantity: Object.keys(req.body)[0]})
 
   } catch (err) {
     next(err)
@@ -94,21 +95,30 @@ router.get('/orderProducts', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
+    let cart
+    let orderProduct
     let state = req.body
     console.log('cartItems', state.cartItems)
-    let cart = await Cart.findOne({
-      where: {
-        userId: req.session.passport.user,
-        status: 'inCart'
-      }
-    })
-    if (!cart){
+    if(!req.session){
       cart = await Cart.create({
-        userId: req.session.passport.user,
         status: 'inCart'
       })
+      req.session.cart = cart
+      req.session.cartId = cart.id
+    }else{
+      cart = await Cart.findOne({
+        where: {
+          // userId: req.session.passport.user
+        }
+      })
+      if (!cart){
+        cart = await Cart.create({
+          // userId: req.session.passport.user,
+          status: 'inCart'
+      })
+      }
     }
-    let orderProduct = await OrderProduct.findAll({
+    orderProduct = await OrderProduct.findAll({
       where: {cartId: cart.id}
     })
     orderProduct.forEach(op => op.destroy())

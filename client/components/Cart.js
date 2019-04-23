@@ -53,6 +53,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   loadCartThunk: () => {
     dispatch(loadCartThunk())
+  },
+  fetch: () =>{
+    dispatch(fetchCart())
   }
 })
 

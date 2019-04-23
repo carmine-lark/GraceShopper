@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
         req.session.quantity ={}
       }
       cart = req.session.cart
-      res.send(req.session.cart, req.session.quantity)
+      res.send([req.session.cart, req.session.quantity])
     }else{
       cart = await Cart.findOrCreate({
         where: {
@@ -57,7 +57,7 @@ router.post('/', async (req, res, next) => {
       }
       req.session.cartId = cart.id
     }
-    let opList = OrderProduct.createOrFind({
+    let opList = OrderProduct.findAll({
       where:{
         cartId: req.session.cartId
       }

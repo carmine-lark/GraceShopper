@@ -3,6 +3,16 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+});
 
 /**
  * COMPONENT
@@ -38,7 +48,7 @@ const AuthForm = props => {
             <input name="address" type="address" />
           </div>
           <div>
-            <Button type="submit">{displayName}</Button>
+            <Button variant="contained" color="primary" type="submit">{displayName}</Button>
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
@@ -62,7 +72,7 @@ const AuthForm = props => {
             <input name="password" type="password" />
           </div>
           <div>
-            <Button type="submit">{displayName}</Button>
+            <Button variant="contained" color="primary" type="submit">{displayName}</Button>
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>

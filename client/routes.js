@@ -6,7 +6,8 @@ import { Login, Signup, UserHome } from './components'
 import { me } from './store'
 import SingleProduct from './components/singleProduct'
 import Product from "./components/Product"
-import ShoppingCart from './components/shopping-cart'
+//import ShoppingCart from './components/shoppingCart'
+import Cart from './components/Cart'
 /**
  * COMPONENT
  */
@@ -24,7 +25,8 @@ class Routes extends Component {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/product" component={Product} />
-        <Route exact path='/shopping-cart' component={ShoppingCart} />
+        {/*<Route exact path='/shoppingCart' component={ShoppingCart} />*/}
+        <Route exact path='/Cart' component={Cart} />
         <Route exact path="/" component={Product} />
         <Route exact path="/product/:id" component={SingleProduct} />
 

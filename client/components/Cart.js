@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {fetchCart, loadCartThunk} from '../store/cart'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { fetchCart, loadCartThunk } from '../store/cart'
 import RemoveItem from './removeItem'
 import SaveCart from './saveCart'
 

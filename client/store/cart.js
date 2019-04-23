@@ -112,8 +112,8 @@ export const fetchCart = () => {
 export const saveCartThunk = cart => {
   return async dispatch => {
     try {
-      const {data} = await axios.post('api/carts/', cart)
-      console.log('saveCartThunk', data)
+      await axios.post('api/carts/', cart)
+      console.log('saveCartThunk')
       const action = getCart()
       dispatch(action)
     } catch (err) {

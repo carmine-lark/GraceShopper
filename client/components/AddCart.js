@@ -11,7 +11,7 @@ class AddCart extends Component {
     handleClick() {
         this.props.add(this.props.prod, 2)
         console.log(this.props.cart)
-        // this.props.saveCart(this.props.cart)
+        this.props.saveCart(this.props.cart)
     }
 
     componentDidMount(){

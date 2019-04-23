@@ -51,9 +51,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetch: () => {
-    dispatch(fetchCart())
-  },
   loadCartThunk: () => {
     dispatch(loadCartThunk())
   }

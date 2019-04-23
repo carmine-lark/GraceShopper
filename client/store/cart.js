@@ -29,8 +29,8 @@ const SAVE_CART = 'SAVE_CART'
 const ORDER_CART = 'ORDER_CART'
 const LOAD_CART = 'LOAD_CART'
 
-const getCart = cartList => ({type: GET_CART, cartList})
-const addToCart = (product,number) => ({type: ADD_PRODUCT, product, number})
+const getCart = (cart, quantity) => ({type: GET_CART, cart, quantity})
+const addToCart = (product, number) => ({type: ADD_PRODUCT, product, number})
 const removeItem = productId => ({type: REMOVE_ITEM, productId})
 //Saves Cart to the Database for multi-browser usage, adding all cartItems as OrderProducts without Price
 const saveCart = () => ({type: SAVE_CART})
@@ -42,14 +42,15 @@ const loadCart = (products, quantity) => ({type: LOAD_CART, products, quantity})
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_CART:
-      return {...state, cartItems: action.cartList}
+      return {...state, cartItems: action.cart, quantity: action.quantity}
     case ADD_PRODUCT:
       if (containsObject(action.product, state.cartItems)) {
         return {
           ...state,
           quantity: {
             ...state.quantity,
-            [action.product.id]: state.quantity[action.product.id] + action.number
+            [action.product.id]:
+              state.quantity[action.product.id] + action.number
           }
         }
       } else {
@@ -96,14 +97,18 @@ export const loadCartThunk = () => {
 }
 
 export const fetchCart = () => {
-  return dispatch => {
-    let {data} = axios.get('/api/carts')
-    const action = getCart(data)
-    dispatch(action)
+  return async dispatch => {
+    try {
+      let {data} = await axios.get('/api/carts')
+      const action = getCart(data[0], data[1])
+      dispatch(action)
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
-export const saveCartThunk = (cart) => {
+export const saveCartThunk = cart => {
   return async dispatch => {
     try {
       const {data} = await axios.post('api/carts/', cart)

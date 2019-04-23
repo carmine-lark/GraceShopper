@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addToCartThunk, saveCartThunk } from '../store/cart'
+import { addToCartThunk, saveCartThunk, fetchCart } from '../store/cart'
 
 class AddCart extends Component {
     constructor(props) {
@@ -10,8 +10,14 @@ class AddCart extends Component {
 
     handleClick() {
         this.props.add(this.props.prod, 2)
-        this.props.saveCart(this.props.cart)
+        console.log(this.props.cart)
+        // this.props.saveCart(this.props.cart)
     }
+
+    componentDidMount(){
+      this.props.fetch()
+    }
+
     render() {
         return (
             <button key={this.props.prod.id} type='button' onClick={this.handleClick}>Add To Cart</button>
@@ -20,11 +26,12 @@ class AddCart extends Component {
 }
 
 const mapStateToProps = state => ({
-  cart: state.cart,
+  cart: state.cart
 })
 const mapDispatchToProps = dispatch => ({
   add: (prod, number) => dispatch(addToCartThunk(prod, number)),
-  saveCart: (cart) => dispatch(saveCartThunk(cart))
+  saveCart: (cart) => dispatch(saveCartThunk(cart)),
+  fetch: () => dispatch(fetchCart())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCart)

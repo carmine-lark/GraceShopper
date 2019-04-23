@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {saveCartThunk} from '../store/cart'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>

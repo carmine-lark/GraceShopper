@@ -33,7 +33,7 @@ router.get('/:id/cart', async (req, res, next) => {
     } else console.log(req.session.user)
     req.session.cart = await Cart.findAll({
       where: {
-        userId: req.session.user.id,
+        userId: req.session.passport.user,
         status: 'inCart'
       },
       include: [{model: OrderProduct, include: [{model: Product}]}]

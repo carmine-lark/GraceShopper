@@ -1,0 +1,23 @@
+Session {
+  cookie:
+   { path: '/',
+     _expires: null,
+     originalMaxAge: null,
+     httpOnly: true },
+  passport: { user: 5 },
+  cart:
+   [ { id: 1,
+       name: 'Madeleine',
+       price: 34,
+       description: 'tasty treat',
+       image: 'example.png',
+       createdAt: '2019-04-22T12:00:51.829Z',
+       updatedAt: '2019-04-22T12:00:51.829Z' },
+     { id: 2,
+       name: 'Choclate Chip',
+       price: 34,
+       description: 'tasty treat',
+       image: 'example.png',
+       createdAt: '2019-04-22T12:00:51.831Z',
+       updatedAt: '2019-04-22T12:00:51.831Z' } ],
+  quantity: { '1': 6, '2': 11 } }

@@ -29,7 +29,7 @@ const SAVE_CART = 'SAVE_CART'
 const ORDER_CART = 'ORDER_CART'
 const LOAD_CART = 'LOAD_CART'
 
-const getCart = () => ({type: GET_CART})
+const getCart = (cartItems, quantity) => ({type: GET_CART, cartItems, quantity})
 export const addToCart = (product, number) => ({type: ADD_PRODUCT, product, number})
 const removeItem = productId => ({type: REMOVE_ITEM, productId})
 //Saves Cart to the Database for multi-browser usage, adding all cartItems as OrderProducts without Price
@@ -42,7 +42,7 @@ const loadCart = (products, quantity) => ({type: LOAD_CART, products, quantity})
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_CART:
-      return {...state, cartItems: action.cartItems}
+      return {...state}
     case ADD_PRODUCT:
       if (containsObject(action.product, state.cartItems)) {
         console.log(action.number)
@@ -101,7 +101,8 @@ export const loadCartThunk = () => {
 
 export const fetchCart = () => {
   return dispatch => {
-    const action = getCart()
+    let {data} = axios.get('api/carts')
+    const action = getCart([], {})
     dispatch(action)
   }
 }

@@ -75,7 +75,7 @@ export default function(state = initialState, action) {
       return state
   }
 }
-
+//delete this
 export const addToCartThunk = product => {
   return dispatch => {
     const action = addToCart(product)
@@ -102,7 +102,7 @@ export const fetchCart = () => {
   }
 }
 
-export const saveCartThunk = (cart) => {
+export const saveCartThunk = cart => {
   return async dispatch => {
     try {
       const {data} = await axios.post('api/carts/', cart)

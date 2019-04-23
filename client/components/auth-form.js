@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import Button from '@material-ui/core/Button';
+
 /**
  * COMPONENT
  */
@@ -13,7 +15,7 @@ const AuthForm = props => {
         <form onSubmit={handleSubmit} name={name}>
           <div>
             <label htmlFor="email">
-              <small>Emailz</small>
+              <small>Email</small>
             </label>
             <input name="email" type="text" />
           </div>
@@ -36,7 +38,7 @@ const AuthForm = props => {
             <input name="address" type="address" />
           </div>
           <div>
-            <button type="submit">{displayName}</button>
+            <Button type="submit">{displayName}</Button>
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
@@ -60,7 +62,7 @@ const AuthForm = props => {
             <input name="password" type="password" />
           </div>
           <div>
-            <button type="submit">{displayName}</button>
+            <Button type="submit">{displayName}</Button>
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
@@ -100,8 +102,17 @@ const mapDispatch = dispatch => {
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
-      const userName = evt.target.username.value
-      const address = evt.target.address.value
+      // if (!evt.target.username) {
+      //   dispatch(auth(email, password, 'asdf', 'asdf', formName))
+      //   return ''
+      // }
+      let userName, address;
+      if (evt.target.username) {
+        userName = evt.target.username.value
+      } else { userName = '' }
+      if (evt.target.address) {
+        address = evt.target.address.value
+      } else { address = '' }
       const password = evt.target.password.value
       dispatch(auth(email, password, userName, address, formName))
     }

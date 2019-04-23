@@ -12,8 +12,12 @@ async function seed() {
 
   await Promise.all([
     Product.create(
-      { name: 'Madeleine', price: 34, description: 'tasty treat', image: 'example.png' }),
-      Product.create({ name: 'Choclate Chip', price: 34, description: 'tasty treat', image: 'example.png' }),
+      { name: 'Madeleine', price: 34, description: 'tasty treat', image: 'https://previews.123rf.com/images/jirkaejc/jirkaejc1305/jirkaejc130500065/19698284-madeleine-cookies-on-white-background.jpg' }),
+      Product.create({ name: 'Choclate Chip', price: 34, description: 'tasty treat', image: 'https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Ffood.fnr.sndimg.com%2Fcontent%2Fdam%2Fimages%2Ffood%2Ffullset%2F2014%2F7%2F17%2F1%2FFN_Simple-Chocolate-Chip-Cookies_s4x3.jpg.rend.hgtvcom.616.462.suffix%2F1438794106265.jpeg&f=1' }),
+      Product.create({ name: 'Cup Cake', price: 37, description: 'tasty cup cake treat', image: 'https://sugarspunrun.com/wp-content/uploads/2018/02/Pinata-cupcakes-recipe-1-of-1-2.jpg' }),
+      Product.create({ name: 'Cheese Cake', price: 44, description: 'New Yorks Best', image: 'https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.seriouseats.com%2Frecipes%2Fimages%2F2017%2F06%2F20170526-no-bake-cheesecake-vicky-wasik-18-1500x1125.jpg&f=1' }),
+      Product.create({ name: 'Napoleon', price: 375, description: 'The best!', image: 'https://i.etsystatic.com/6055149/r/il/dbc3e8/1805840637/il_794xN.1805840637_ewav.jpg' }),
+      Product.create({ name: 'Tart', price: 314, description: 'tarty!', image: 'https://www.aprettylifeinthesuburbs.com/wp-content/uploads/2013/07/Rasperry-Vanilla-Bean-Cream-Tarts-F.jpg' }),
       User.create({ name: 'Cody', address: '101 Dalmation Lane', email: 'cody@email.com', password: '123' }),
       User.create({ name: 'Murphy', address: '404 Persian Lane', email: 'murphy@email.com', password: '123' }),
       Cart.create({ status: 'inCart' }),

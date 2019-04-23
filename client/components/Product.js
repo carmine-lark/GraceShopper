@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import AddCart from './AddCart';
-import { fetchProducts} from '../store/product'
+import { fetchProducts } from '../store/product'
 import SingleProduct from './SingleProduct';
 import { Link } from 'react-router-dom'
 
@@ -13,7 +13,7 @@ class Product extends React.Component {
     console.log('compDidMount', this.props)
   }
 
-  handleSubmit () {
+  handleSubmit() {
 
   }
 
@@ -23,16 +23,17 @@ class Product extends React.Component {
         <div>
           {this.props.products.map(prod => {
             return (
-            <div key={prod.id}>
-              <img width='200px' src={prod.image}></img>
-              <br />
-              {prod.name}
-              <br />
-              {prod.price}
-              <br />
-            < AddCart prod={prod} />
-            <Button prod={prod} component={Link} to={`/product/${prod.id}`}>Details</Button>
-            </div>)
+              <div key={prod.id}>
+                <img width='200px' src={prod.image}></img>
+                <br />
+                {prod.name}
+                <br />
+                {prod.price}
+                <br />
+
+                < AddCart prod={prod} />
+                <Button prod={prod} component={Link} to={`/product/${prod.id}`}>Details</Button>
+              </div>)
           })}
 
         </div>

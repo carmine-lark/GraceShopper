@@ -6,7 +6,7 @@ import { fetchProduct } from '../store/product'
 class SingleProduct extends Component {
   constructor(props) {
     super(props)
-    console.log('singleProduct',this.props.product.products)
+    console.log('singleProduct', this.props.product.products)
   }
   componentDidMount() {
     console.log('compdidMount')
@@ -14,8 +14,8 @@ class SingleProduct extends Component {
   }
 
 
-  render () {
-    console.log ('single prod props', this.props.product)
+  render() {
+    console.log('single prod props', this.props.product)
 
 
     return (
@@ -31,7 +31,7 @@ class SingleProduct extends Component {
       // <div>
       // {
       //   this.props.product.products.map(prod => {
-          
+
       //     if (+this.props.match.params.id === prod.id)
       //     return (
       //       <div key={prod.id}>
@@ -57,4 +57,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect (mapStateToProps, mapDispatchToProps)(SingleProduct)
+export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)

@@ -28,7 +28,7 @@ class Product extends React.Component {
                 <br />
                 {prod.name}
                 <br />
-                {prod.price}
+                $ {prod.price * 0.01}
                 <br />
 
                 < AddCart prod={prod} />

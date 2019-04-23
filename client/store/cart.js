@@ -5,7 +5,8 @@ import session from 'express-session'
 
 const initialState = {
   cartItems: [],
-  quantity: {}
+  quantity: {},
+  price: {}
 }
 
 //Array.include(Object) does not work, so I guess I'll just add my own Object Equality Checker.
@@ -29,27 +30,31 @@ const SAVE_CART = 'SAVE_CART'
 const ORDER_CART = 'ORDER_CART'
 const LOAD_CART = 'LOAD_CART'
 
-const getCart = () => ({type: GET_CART})
-const addToCart = product => ({type: ADD_PRODUCT, product})
-const removeItem = productId => ({type: REMOVE_ITEM, productId})
+const getCart = () => ({ type: GET_CART })
+const addToCart = product => ({ type: ADD_PRODUCT, product })
+const removeItem = productId => ({ type: REMOVE_ITEM, productId })
 //Saves Cart to the Database for multi-browser usage, adding all cartItems as OrderProducts without Price
-const saveCart = () => ({type: SAVE_CART})
+const saveCart = () => ({ type: SAVE_CART })
 //Saves Cart as Order, adding all cartItems as OrderProducts with Price
-const orderCart = () => ({type: ORDER_CART})
+const orderCart = () => ({ type: ORDER_CART })
 //Loads the Cart associated with the cart's user
-const loadCart = (products, quantity) => ({type: LOAD_CART, products, quantity})
+const loadCart = (products, quantity) => ({ type: LOAD_CART, products, quantity })
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case GET_CART:
-      return {...state, cartItems: state.cartItems}
+      return { ...state, cartItems: state.cartItems }
     case ADD_PRODUCT:
       if (containsObject(action.product, state.cartItems)) {
         return {
           ...state,
           quantity: {
             ...state.quantity,
-            [action.product.id]: state.quantity[action.product.id] + 1
+            [action.product.id]: state.quantity[action.product.id] + 1,
+          },
+          price: {
+            ...state.price,
+            [action.product.id]: state.price[action.product.id] + action.product.price
           }
         }
       } else {
@@ -57,7 +62,10 @@ export default function(state = initialState, action) {
         return {
           ...state,
           cartItems: [...state.cartItems, action.product],
-          quantity: {...state.quantity, [action.product.id]: 1}
+          quantity: { ...state.quantity, [action.product.id]: 1 },
+          price: {
+            ...state.price, [action.product.id]: action.product.price
+          }
         }
       }
     case REMOVE_ITEM:
@@ -70,7 +78,7 @@ export default function(state = initialState, action) {
         quantity: newQuantity
       }
     case LOAD_CART:
-      return {...state, cartItems: action.products, quantity: action.quantity}
+      return { ...state, cartItems: action.products, quantity: action.quantity }
     default:
       return state
   }
@@ -86,7 +94,7 @@ export const addToCartThunk = product => {
 export const loadCartThunk = () => {
   return async dispatch => {
     try {
-      const {data} = await axios.get('/api/carts/orderProducts')
+      const { data } = await axios.get('/api/carts/orderProducts')
       const action = loadCart(data[0], data[1])
       dispatch(action)
     } catch (err) {
@@ -105,7 +113,7 @@ export const fetchCart = () => {
 export const saveCartThunk = cart => {
   return async dispatch => {
     try {
-      const {data} = await axios.post('api/carts/', cart)
+      const { data } = await axios.post('api/carts/', cart)
       console.log('saveCartThunk', data)
       const action = getCart()
       dispatch(action)

@@ -14,11 +14,12 @@ const initialState = {
 //function containsObj- returns a boolean check and figures out if the given object exists in the given array.
 const containsObject = (obj, arr) => {
   let ansBool = false
-  arr.map(item => {
-    if (item.hasOwnProperty('id') && item.id === obj.id) {
+  if (arr){
+    arr.map(item => {
+      if (item.hasOwnProperty('id') && item.id === obj.id) {
       ansBool = true
     }
-  })
+  })}
   return ansBool
 }
 

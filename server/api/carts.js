@@ -5,33 +5,28 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    if (req.session.cartId) {
-      console.log(req.session)
-    } else if (req.session.passport) {
-      req.session.cartId = await Cart.findOne({
-        where: {userId: req.session.passport.user}
-      }).id
+    let cart =[]
+    if (!req.session.passport){
+      if(!req.session.cart){
+        req.session.cart = []
+        req.session.quantity ={}
+      }
+      cart = req.session.cart
+      res.send(req.session.cart, req.session.quantity)
     }else{
-      let cart = await Cart.create({
-        status: 'inCart'
+      cart = await Cart.findOrCreate({
+        where: {
+          userId: req.session.passport.user,
+          status: 'inCart'
+        },
+        include: [{all:true}]
       })
-      req.session.cartId = cart.id
+
+      console.log('orderList', cart)
+      res.send([req.session.cart, req.session.quantity])
     }
-    let cartList= []
-    let quantity = {}
-    const order = await OrderProduct.findAll({
-      where: {cartId: req.session.cartId}
-    })
-    if(order.length){
-      order.forEach(async (op)=>{
-        cartList.push(await Product.findOne({where:{id: op.productId}}))
-        quantity[op.productId]= op.quantity
-      })
-    }
-    console.log('order', cartList)
-    req.session.cart = cartList
-    req.session.quantity = quantity
-    res.send([req.session.cart, req.session.quantity])
+    console.log('session.cart', req.session.cart)
+
   } catch (err) {
     next(err)
   }
@@ -49,36 +44,12 @@ router.get('/orderProducts', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    let state = req.body
-    console.log('cartItems', state.cartItems)
-    // if (req.session.passport) {
-    //   cart = await Cart.findOne({
-    //     where: {
-    //       userId: req.session.passport.user,
-    //       status: 'inCart'
-    //     }
-    //   })
-    //   if (!cart) {
-    //     cart = await Cart.create({
-    //       userId: req.session.passport.user,
-    //       status: 'inCart'
-    //     })
-    //   }
-    // }
-    let orderProduct = await OrderProduct.findAll({
-      where: {cartId: req.session.cartId}
-    })
-    orderProduct.forEach(op => op.destroy())
-    console.log('destroyed OrderProducts')
-    state.cartItems.map(item => {
-      OrderProduct.create({
-        quantity: state.quantity[item.id],
-        storedPrice: 0,
-        cartId: req.session.cartId,
-        productId: item.id
-      })
-      req.session.quantity[item.productId] = item.quantity
-    })
+    let bodyCart = req.body.cartItems
+    let bodyQuantity = req.body.quantity
+    console.log('body Cart?', req.body)
+    req.session.cart = bodyCart
+    req.session.quantity= bodyQuantity
+    res.status(201)
   } catch (err) {
     next(err)
   }

@@ -37,7 +37,7 @@ const AuthForm = props => {
           </div>
           <div>
             <label htmlFor="username">
-              <small>name</small>
+              <small>Name</small>
             </label>
             <input name="username" type="username" />
           </div>

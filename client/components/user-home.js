@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {loadCartThunk} from '../store/cart'
+import {Redirect} from 'react-router-dom'
+
 /**
  * COMPONENT
  */
@@ -17,6 +19,7 @@ class UserHome extends React.Component {
    return (
      <div>
        <h3>Welcome, {this.props.email}</h3>
+       <Redirect to="/product"></Redirect>
      </div>
    )
  }

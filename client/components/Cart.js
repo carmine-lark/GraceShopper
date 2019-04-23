@@ -25,6 +25,7 @@ class Cart extends Component {
         {this.props.cartItems.map(item => {
           return (
             <div key={item.id}>
+            <img width='200px' src={item.image}></img>
               <div>{item.name}</div>
               <div>{this.props.quantity[item.id]}</div>
               <RemoveItem prodId={item.id} />

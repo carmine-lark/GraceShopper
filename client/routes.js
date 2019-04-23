@@ -6,6 +6,9 @@ import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import SingleProduct from './components/SingleProduct'
 import Product from "./components/Product"
+import CheckOut from './components/CheckOut';
+import Cart from './components/Cart'
+
 /**
  * COMPONENT
  */
@@ -20,12 +23,13 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route exact path="/cart" component={Cart} />
+        <Route exact path="/checkout" component={CheckOut} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/product" component={Product} />
         <Route exact path="/" component={Product} />
         <Route exact path="/product/:id" component={SingleProduct} />
-
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

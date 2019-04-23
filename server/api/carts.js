@@ -48,10 +48,27 @@ router.post('/', async (req, res, next) => {
   try {
     let bodyCart = req.body.cartItems
     let bodyQuantity = req.body.quantity
+    if (!req.session.cartId){
+      let cart = Cart.create({
+        status:'inCart'
+      })
+      if (req.session.passport.user){
+        cart.update({userId: req.session.passport.user})
+      }
+      req.session.cartId = cart.id
+    }
+    let opList = OrderProduct.createOrFind({
+      where:{
+        cartId: req.session.cartId
+      }
+    })
+    opList.forEach(op=>{
+      op.update({quantity: bodyQuantity[op.id]})
+    })
     console.log('body Cart?', req.body)
     req.session.cart = bodyCart
     req.session.quantity= bodyQuantity
-    res.status(201)
+    res.sendStatus(200)
   } catch (err) {
     next(err)
   }
@@ -73,7 +90,7 @@ router.post('/order', async (req, res, next) => {
         status: 'inCart'
       })
     }
-    let orderProduct = await OrderProduct.findAll({
+    let orderProduct = await OrderProduct.create({
       where: {cartId: cart.id}
     })
     await cart.update({status: 'ordered'})

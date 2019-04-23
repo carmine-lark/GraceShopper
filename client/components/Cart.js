@@ -20,17 +20,23 @@ class Cart extends Component {
   }
 
   render() {
+    let cartList
+    if (!this.props.cartItems){
+      cartList =  null
+    }else
+      cartList  =
+      this.props.cartItems.map(item => {
+        return (
+          <div key={item.id}>
+            <div>{item.name}</div>
+            <div>{this.props.quantity[item.id]}</div>
+            <RemoveItem prodId={item.id} />
+          </div>
+        )
+    })
     return (
       <div>
-        {this.props.cartItems.map(item => {
-          return (
-            <div key={item.id}>
-              <div>{item.name}</div>
-              <div>{this.props.quantity[item.id]}</div>
-              <RemoveItem prodId={item.id} />
-            </div>
-          )
-        })}
+        {cartList}
         <SaveCart />
         <button type='button' onClick={this.handleClick}>Click</button>
       </div>

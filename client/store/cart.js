@@ -29,8 +29,8 @@ const SAVE_CART = 'SAVE_CART'
 const ORDER_CART = 'ORDER_CART'
 const LOAD_CART = 'LOAD_CART'
 
-const getCart = () => ({type: GET_CART})
-const addToCart = product => ({type: ADD_PRODUCT, product})
+const getCart = cartList => ({type: GET_CART, cartList})
+const addToCart = (product,number) => ({type: ADD_PRODUCT, product, number})
 const removeItem = productId => ({type: REMOVE_ITEM, productId})
 //Saves Cart to the Database for multi-browser usage, adding all cartItems as OrderProducts without Price
 const saveCart = () => ({type: SAVE_CART})
@@ -42,14 +42,14 @@ const loadCart = (products, quantity) => ({type: LOAD_CART, products, quantity})
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_CART:
-      return {...state, cartItems: state.cartItems}
+      return {...state, cartItems: action.cartList}
     case ADD_PRODUCT:
       if (containsObject(action.product, state.cartItems)) {
         return {
           ...state,
           quantity: {
             ...state.quantity,
-            [action.product.id]: state.quantity[action.product.id] + 1
+            [action.product.id]: state.quantity[action.product.id] + action.number
           }
         }
       } else {
@@ -57,7 +57,7 @@ export default function(state = initialState, action) {
         return {
           ...state,
           cartItems: [...state.cartItems, action.product],
-          quantity: {...state.quantity, [action.product.id]: 1}
+          quantity: {...state.quantity, [action.product.id]: action.number}
         }
       }
     case REMOVE_ITEM:
@@ -76,9 +76,9 @@ export default function(state = initialState, action) {
   }
 }
 
-export const addToCartThunk = product => {
+export const addToCartThunk = (product, number) => {
   return dispatch => {
-    const action = addToCart(product)
+    const action = addToCart(product, number)
     dispatch(action)
   }
 }
@@ -97,7 +97,8 @@ export const loadCartThunk = () => {
 
 export const fetchCart = () => {
   return dispatch => {
-    const action = getCart()
+    let {data} = axios.get('/api/carts')
+    const action = getCart(data)
     dispatch(action)
   }
 }

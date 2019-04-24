@@ -39,11 +39,7 @@ class Cart extends Component {
               <div className="productname">{item.name}</div>
               <div className="productname">{this.props.quantity[item.id]}</div>
               <div>
-<<<<<<< HEAD
                 <p>Price: ${(this.props.price[item.id] * 0.01).toFixed(2)}</p>
-=======
-                <p className="price">Price: ${this.props.price[item.id] * 0.01}</p>
->>>>>>> master
               </div>
               <RemoveItem prodId={item.id} />
             </div>

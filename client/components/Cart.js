@@ -49,7 +49,7 @@ class Cart extends Component {
 
         <div>
           Total Price: ${
-            this.totalPrice() * 0.01
+            (this.totalPrice() * 0.01).toFixed(2)
           }
         </div>
         <SaveCart />

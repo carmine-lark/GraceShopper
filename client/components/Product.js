@@ -23,7 +23,8 @@ class Product extends React.Component {
                 <br />
                  <p  className="productname">{prod.name}</p>
                 <br />
-                <p className="price">{'$'}{' '}{prod.price * 0.01}</p>
+                $ {(prod.price * 0.01).toFixed(2)}
+
                 <br />
 
                 < AddCart prod={prod} />

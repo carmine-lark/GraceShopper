@@ -4,35 +4,30 @@ import AddCart from './AddCart';
 import { fetchProducts } from '../store/product'
 import SingleProduct from './SingleProduct';
 import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
 
-import { Button } from 'reactstrap';
 
 class Product extends React.Component {
   componentDidMount() {
     this.props.fetchProducts()
-    console.log('compDidMount', this.props)
-  }
-
-  handleSubmit() {
-
   }
 
   render() {
     return (
       <div>
-        <div>
+        <div className="productlist" >
           {this.props.products.map(prod => {
             return (
-              <div key={prod.id}>
-                <img width='200px' src={prod.image}></img>
+              <div key={prod.id} className="product" >
+                <img className="img" width='155px' src={prod.image}></img>
                 <br />
-                {prod.name}
+                 <p  className="productname">{prod.name}</p>
                 <br />
-                $ {prod.price * 0.01}
+                <p className="price">{'$'}{' '}{prod.price * 0.01}</p>
                 <br />
 
                 < AddCart prod={prod} />
-                <Button prod={prod} component={Link} to={`/product/${prod.id}`}>Details</Button>
+                <Button prod={prod} component={Link} to={`/product/${prod.id}`}>More ... </Button>
               </div>)
           })}
 
@@ -46,7 +41,6 @@ class Product extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state', state)
   return {
     products: state.product.products
   }

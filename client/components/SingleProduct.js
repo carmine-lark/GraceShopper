@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchProduct } from '../store/product'
-
+import AddCart from "../components/AddCart"
 
 class SingleProduct extends Component {
   constructor(props) {
@@ -15,19 +15,25 @@ class SingleProduct extends Component {
 
 
   render() {
-    console.log('single prod props', this.props.product)
-
 
     return (
-      <div key={this.props.product.product.id}>
+<div>
+      <div className="card" key={this.props.product.product.id}>
         <img width='120px' height='auto' src={this.props.product.product.image}></img>
         <br />
-        {this.props.product.product.name}
+        <div className="container">
+          <p className="productname" > {this.props.product.product.name}</p>
         <br />
-        {this.props.product.product.price}
+         <p className="price">{'$'}{' '}{this.props.product.product.price * 0.01}</p>
         <br />
-        {this.props.product.product.description}
+          <h5> {this.props.product.product.description}</h5>
+        </div>
       </div>
+
+      <div>
+        < AddCart prod={this.props.product.product} />
+      </div>
+</div>
       // <div>
       // {
       //   this.props.product.products.map(prod => {

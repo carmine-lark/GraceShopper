@@ -18,21 +18,22 @@ class Product extends React.Component {
   }
 
   render() {
+    let prods = this.props.products
     return (
       <div>
         <div>
-          {this.props.products.map(prod => {
+          {Object.keys(prods).map(prod => {
             return (
-              <div key={prod.id}>
-                <img width='200px' src={prod.image}></img>
+              <div key={prod}>
+                <img width='200px' src={prods[prod].image}></img>
                 <br />
-                {prod.name}
+                {prods[prod].name}
                 <br />
-                {prod.price}
+                {prods[prod].price}
                 <br />
 
                 < AddCart prod={prod} />
-                <Button prod={prod} component={Link} to={`/product/${prod.id}`}>Details</Button>
+                <Button prod={prod} component={Link} to={`/product/${prod}`}>Details</Button>
               </div>)
           })}
 

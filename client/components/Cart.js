@@ -21,16 +21,18 @@ class Cart extends Component {
 
   render() {
     let cartList
-    if (!this.props.cartItems){
+    let quantity = this.props.quantity
+    let products = this.props.products
+    if (!quantity){
       cartList =  null
     }else
       cartList  =
-      this.props.cartItems.map(item => {
+      Object.keys(quantity).map(itemId => {
         return (
-          <div key={item.id}>
-            <div>{item.name}</div>
-            <div>{this.props.quantity[item.id]}</div>
-            <RemoveItem prodId={item.id} />
+          <div key={itemId}>
+            <div>{products[itemId].name}</div>
+            <div>{quantity[itemId]}</div>
+            <RemoveItem prodId={itemId} />
           </div>
         )
     })
@@ -45,9 +47,10 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => ({
-  cartItems: state.cart.cartItems,
+
   quantity: state.cart.quantity,
-  userId: state.user.id
+  userId: state.user.id,
+  products: state.product.products
 })
 
 const mapDispatchToProps = dispatch => ({

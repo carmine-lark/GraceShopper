@@ -3,22 +3,29 @@ const router = require('express').Router()
 const {Cart, Product, OrderProduct} = require('../db/models')
 module.exports = router
 
-// if req sesion change to req session cart
+// Req.Session design:
+// Passport - created when user is logged in,carries user id in req.session.passport.user
+// Cart - object that contains the ids of Products as keys, with their quantities as values
+
+
+// Purpose: To the get the current cart
+//associated with the session or the user
+// Input: request, response, next
+// Intended request: nothing
+// Intended Output: a collection of all OrderProducts associated with the session's cart
 router.get('/', async (req, res, next) => {
   console.log(req.session)
   try {
-    let cart = []
+    let cart = {}
     if (!req.session.passport) {
       if (!req.session.cartId) {
-        req.session.cart = []
-        req.session.quantity = {}
-        cart = await Cart.create({
-          status: 'inCart'
-        })
-        req.session.cartId = cart.id
-        console.log('no CartId Session', req.session)
+        req.session.cart = {}
+        req.session.quantity= {}
+        cart = req.session.quantity
+        console.log('no quantity?', req.session.quantity)
       }
-      res.send([req.session.cart, req.session.quantity])
+
+      res.send(req.session.quantity)
     } else {
       cart = await Cart.findCreateFind({
         where: {
@@ -27,25 +34,15 @@ router.get('/', async (req, res, next) => {
         },
         include: [{all: true}]
       })
-      console.log('User, Cart findCreateFind', cart[0].dataValues.id)
+      console.log('User, Cart findCreateFind', cart[0])
       req.session.cartId = cart[0].dataValues.id
-      console.log('User, no Cart Session', req.session)
-
-      let orderProducts = await OrderProduct.findAll({
-        where: {
-          cartId: req.session.cartId
-        }
-      })
-      orderProducts.forEach(async op => {
-        console.log(op)
-        req.session.cart.push(await Product.findByPk(op.productId))
-        req.session.quantity[op.productId] = op.quantity
+      cart.orderProducts.forEach(op=>{
+        console.log( op)
       })
 
-      console.log('orderList', req.session.cart)
-      res.send([req.session.cart, req.session.quantity])
+      res.send(req.session.quantity)
     }
-    console.log('session.cart', req.session.cart)
+    console.log('session.cart', req.session.quantity)
   } catch (err) {
     next(err)
   }
@@ -62,41 +59,48 @@ router.get('/orderProducts', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
+  console.log('body', req.body)
   try {
-    console.log('body', req.body)
-    let bodyCart = req.body.cartItems
-    let bodyQuantity = req.body.quantity
-    let cart = Cart.findOne({
-      where:{
-        id: req.session.cartId,
-        status: 'inCart'
+    const bodyId = req.body[0]
+    const bodyQuant = req.body[1]
+    console.log('session start', req.session)
+    if(!req.user){
+      if (Object.keys(req.session.quantity).length){
+        if(req.session.quantity[bodyId]){
+          console.log('session quantity as an entry for this product')
+          req.session.quantity[bodyId] += bodyQuant
+        }else{
+          console.log('session quantity is not defined')
+          req.session.quantity[bodyId] = bodyQuant
+        }
+      }else {
+        req.session.quantity[bodyId] = bodyQuant
       }
-    })
-    if (req.session.passport) {
-      cart.update({userId: req.session.passport.user})
-    }
-    let bodyProductIds = Object.keys(bodyQuantity)
-    let opList = await OrderProduct.findAll({
-      where: {
-        cartId: req.session.cartId
-      }
-    })
-    opList.forEach(op => {
-      if (bodyProductIds.includes(op.id)){
-        op.update({quantity: bodyQuantity[op.id]})
-      }
-    })
+    }else {
+      console.log('cartId', req.session.cartId)
+      const existingOrderProd = await OrderProduct.findOne({
+        where:{
+          productId: bodyId,
+          cartId: res.session.cartId
+        }
+      })
+      if (existingOrderProd){
+        const updateOrderProd = await existingOrderProd.update({
+          quantity: existingOrderProd.quantity+ bodyQuant
+        })
+        req.session.quantity[bodyId] = updateOrderProd.quantity
+        res.send(req.session.quantity)
+      } else {
+        const newOrderProd = await OrderProduct.create({
+          quantity: bodyQuant,
+          productId: bodyId,
+          cartId: req.session.cartId
+        })
 
-    console.log('body Cart?', req.body)
-    bodyCart.forEach(prod=>{req.session.cart.push(prod)})
-    for (var ind in bodyQuantity){
-      if (bodyQuantity[ind]){
-      req.session.quantity[ind] = bodyQuantity[ind]
+        res.send(newOrderProd)
       }
     }
-
     console.log('req session', req.session)
-    res.sendStatus(200)
   } catch (err) {
     next(err)
   }

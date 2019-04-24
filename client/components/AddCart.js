@@ -9,18 +9,17 @@ class AddCart extends Component {
     }
 
     handleClick() {
-        this.props.add(this.props.prod, 2)
-        console.log(this.props.cart)
-        this.props.saveCart(this.props.cart)
+      this.props.add(this.props.prod, 2)
+      this.props.saveCart([this.props.prod, 2])
     }
 
     componentDidMount(){
-      this.props.fetch()
+
     }
 
     render() {
         return (
-            <button key={this.props.prod.id} type='button' onClick={this.handleClick}>Add To Cart</button>
+            <button key={this.props.prodId} type='button' onClick={this.handleClick}>Add To Cart</button>
         )
     }
 }
@@ -30,7 +29,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
   add: (prod, number) => dispatch(addToCartThunk(prod, number)),
-  saveCart: (cart) => dispatch(saveCartThunk(cart)),
+  saveCart: (arr) => dispatch(saveCartThunk(arr)),
   fetch: () => dispatch(fetchCart())
 })
 

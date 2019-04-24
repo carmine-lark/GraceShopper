@@ -8,7 +8,7 @@ const GET_PRODUCT = 'GET_PRODUCT'
 //INITIAL STATE
 
 const initialState= {
-  products: [],
+  products: {},
   product: {}
 }
 
@@ -16,7 +16,7 @@ const initialState= {
 // Action Creators
 const getProducts = products => ({type: GET_ALL_PRODUCTS, products})
 const removeProduct = (productId) => ({type: REMOVE_PRODUCT, productId})
-const getProduct = product => ({type: GET_PRODUCT, product})
+const getProduct = prodId => ({type: GET_PRODUCT, prodId})
 
 // Reducer
 

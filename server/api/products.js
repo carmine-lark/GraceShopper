@@ -6,8 +6,12 @@ router.get('/', async (req, res, next) => {
   // secure ... as long as we have a way f
   try {
     const products = await Product.findAll({})
+    const sendProd = {}
+    products.forEach(product=>{
+      sendProd[product.id] = product
+    })
     console.log(req.session.cart)
-    res.status(200).send(products)
+    res.status(200).send(sendProd)
   } catch (err) {
     next(err)
   }

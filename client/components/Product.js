@@ -19,7 +19,7 @@ class Product extends React.Component {
           {this.props.products.map(prod => {
             return (
               <div key={prod.id} className="product" >
-                <img className="img" width='155px' src={prod.image}></img>
+                <img className="img" width='160px' height="155px" src={prod.image}></img>
                 <br />
                  <p  className="productname">{prod.name}</p>
                 <br />
@@ -27,7 +27,7 @@ class Product extends React.Component {
                 <br />
 
                 < AddCart prod={prod} />
-                <Button prod={prod} component={Link} to={`/product/${prod.id}`}>More ... </Button>
+                <Button variant="contained" color="primary" prod={prod} component={Link} to={`/product/${prod.id}`}>More ... </Button>
               </div>)
           })}
 

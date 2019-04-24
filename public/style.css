@@ -10,7 +10,7 @@ body {
 .logo {
   color: rgb(0, 136, 255);
   background: linear-gradient(to bottom, #3bb9f8 0%,#df9eff 50%);
-
+  text-shadow: black
 }
 
 a {
@@ -43,7 +43,7 @@ form div {
   flex-flow: row wrap;
   /* flex-wrap: wrap; */
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   /* flex-direction: row; */
   align-items: space-around
 }
@@ -61,7 +61,7 @@ form div {
   border-radius: 10px;
   width: 55%;
   /* height: 200%; */
-  /* padding: 10px 10px 20px 10px; */
+  padding: 15px
 }
 
 .productdesciption {
@@ -102,7 +102,7 @@ form div {
 }
 
 .card:hover {
- box-shadow: 16px 1px 116px 0 rgb(204, 0, 255);
+ box-shadow: 16px 1px 116px 0 rgb(0, 255, 17);
 }
 
 .container {
@@ -125,11 +125,12 @@ form div {
 }
 
 .addcartbutton {
-  color: #3bb9f8
+  color: #3bb9f8;
+  font-size: 20px
 }
 
 .addcartbutton:hover {
-  color: beige
+  color: black;
 }
 
 .list {

@@ -17,7 +17,9 @@ async function seed() {
       Product.create({ name: 'Cheese Cake', price: 444, description: 'New Yorks Best', image: 'https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.seriouseats.com%2Frecipes%2Fimages%2F2017%2F06%2F20170526-no-bake-cheesecake-vicky-wasik-18-1500x1125.jpg&f=1' }),
       Product.create({ name: 'Napoleon', price: 375, description: 'The best!', image: 'https://i.etsystatic.com/6055149/r/il/dbc3e8/1805840637/il_794xN.1805840637_ewav.jpg' }),
       Product.create({ name: 'Tart', price: 314, description: 'Tarty!', image: 'https://www.aprettylifeinthesuburbs.com/wp-content/uploads/2013/07/Rasperry-Vanilla-Bean-Cream-Tarts-F.jpg' }),
-
+      Product.create({ name: 'Tres Leche', price: 374, description: 'This One Right Here!', image: 'https://static01.nyt.com/images/2018/02/06/dining/06COOKING-TRESLECHESCAKE2/06COOKING-TRESLECHESCAKE2-articleLarge.jpg' }),
+      Product.create({ name: 'Flan', price: 574, description: 'This One Right Here!', image: 'http://foodisafourletterword.com/wp-content/uploads/2019/03/Instant_Pot_Vanilla_Flan_Recipe_closeup.jpg' }),
+      
       Product.create({ name: 'Cinnamon rolls', price: 534, description: 'tasty treat', image: 'https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.yM01JVYqajuKywWbHJ-DZAHaEK%26pid%3DApi&f=1' }),
       Product.create({ name: 'Chocolate brownie', price: 534, description: 'tasty treat', image: 'https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F68%2FChocolatebrownie.JPG%2F1200px-Chocolatebrownie.JPG&f=1' }),
       Product.create({ name: 'Coconut cake', price: 437, description: 'tasty Coconut cake treat', image: 'https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2F3.bp.blogspot.com%2F-EgsHQzAICn8%2FTwDl83C1XwI%2FAAAAAAAAA0Q%2FxY1WsbvYAzQ%2Fs1600%2FIMG_2235.JPG&f=1' }),

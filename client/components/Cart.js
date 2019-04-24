@@ -26,7 +26,7 @@ class Cart extends Component {
   }
 
   componentDidMount() {
-    this.props.fetch()
+    this.props.loadCartThunk()
   }
 
   render() {
@@ -52,7 +52,7 @@ class Cart extends Component {
           }
         </div>
         <SaveCart />
-        {/* <button type='button' onClick={this.handleClick}>Click</button> */}
+        {/* <button type='button' onClick={this.handleClick}>Load Cart</button> */}
 
 
       </div>

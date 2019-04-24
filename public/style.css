@@ -7,6 +7,12 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.logo {
+  color: rgb(0, 136, 255);
+  background: linear-gradient(to bottom, #3bb9f8 0%,#df9eff 50%);
+
+}
+
 a {
   text-decoration: none;
 }

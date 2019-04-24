@@ -23,7 +23,7 @@ class Cart extends Component {
         ansInt += this.props.price[key]
       }
     }
-    return ansInt
+    return (ansInt).toFixed(2)
   }
 
   componentDidMount() {
@@ -40,7 +40,7 @@ class Cart extends Component {
               <div>{item.name}</div>
               <div>{this.props.quantity[item.id]}</div>
               <div>
-                <p>Price: ${this.props.price[item.id] * 0.01}</p>
+                <p>Price: ${(this.props.price[item.id] * 0.01).toFixed(2)}</p>
               </div>
               <RemoveItem prodId={item.id} />
             </div>

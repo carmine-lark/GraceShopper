@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {saveCartThunk} from '../store/cart'
 
-class SaveCartButton extends Component{
+class SaveCart extends Component{
     constructor(props){
         super(props)
         this.handleClick = this.handleClick.bind(this)
@@ -25,4 +25,4 @@ const mapDispatchToProps = dispatch => ({
     saveCart: (cart) => dispatch(saveCartThunk(cart))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SaveCartButton)
+export default connect(mapStateToProps, mapDispatchToProps)(SaveCart)

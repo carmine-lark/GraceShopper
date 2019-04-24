@@ -9,7 +9,6 @@ import { Button } from 'reactstrap';
 
 class Product extends React.Component {
   componentDidMount() {
-    this.props.fetchProducts()
     console.log('compDidMount', this.props)
   }
 

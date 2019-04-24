@@ -8,6 +8,8 @@ import SingleProduct from './components/SingleProduct'
 import Product from "./components/Product"
 import CheckOut from './components/CheckOut';
 import Cart from './components/Cart'
+import { fetchProducts } from './store/product'
+
 
 /**
  * COMPONENT
@@ -19,7 +21,7 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
-   
+
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -58,6 +60,7 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      dispatch(fetchProducts())
     }
   }
 }

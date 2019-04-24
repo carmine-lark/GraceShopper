@@ -26,7 +26,7 @@ const styles = {
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1>Syntactic Sugar</h1>
+    <h1 className="logo">Syntactic Sugar</h1>
     <nav >
       {isLoggedIn ? (
         <div >

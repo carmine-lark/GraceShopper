@@ -12,7 +12,6 @@ class Cart extends Component {
   }
 
   handleClick() {
-    console.log(this.props.userId)
     this.props.loadCartThunk()
   }
 
@@ -37,10 +36,14 @@ class Cart extends Component {
           return (
             <div key={item.id}>
               <img width='200px' src={item.image}></img>
-              <div>{item.name}</div>
-              <div>{this.props.quantity[item.id]}</div>
+              <div className="productname">{item.name}</div>
+              <div className="productname">{this.props.quantity[item.id]}</div>
               <div>
+<<<<<<< HEAD
                 <p>Price: ${(this.props.price[item.id] * 0.01).toFixed(2)}</p>
+=======
+                <p className="price">Price: ${this.props.price[item.id] * 0.01}</p>
+>>>>>>> master
               </div>
               <RemoveItem prodId={item.id} />
             </div>
@@ -53,7 +56,7 @@ class Cart extends Component {
           }
         </div>
         <SaveCart />
-        <button type='button' onClick={this.handleClick}>Click</button>
+        {/* <button type='button' onClick={this.handleClick}>Click</button> */}
 
 
       </div>
